@@ -1,0 +1,7 @@
+benchmark	samples	median_ns/msg	min_ns/msg	max_ns/msg	median_B/msg	median_allocs/msg
+BenchmarkChannelString/Copy/Bytes64-4	3	2112.00	2109.00	2132.00	659	28
+BenchmarkChannelString/UnicodeRef/Bytes64-4	3	2508.00	2501.00	2589.00	657	31
+BenchmarkChannelString/Copy/Bytes65536-4	3	13280.00	12278.00	13631.00	66140	28
+BenchmarkChannelString/UnicodeRef/Bytes65536-4	3	2602.00	2530.00	2610.00	657	31
+BenchmarkChannelString/Copy/Bytes1048576-4	3	115885.00	115647.00	118806.00	1049357	28
+BenchmarkChannelString/UnicodeRef/Bytes1048576-4	3	2662.00	2643.00	2692.00	659	31

@@ -1,0 +1,17 @@
+Prebuilt glue objects for pythago-dist -mode shared, one per Python ABI, OS and architecture
+(<abi>-<goos>_<goarch>.o), so that shared-mode builds need no LLVM.
+
+They are reproducible: `pythago-dist -prebuild-glue glue/prebuilt` rebuilds byte for byte,
+with the pinned LLVM, the objects of the host's OS and updates their lines in SHA256SUMS.
+- Linux: PYTHAGO_SYSROOT_ARM64 / PYTHAGO_SYSROOT_AMD64 from ci/sysroot.sh; ci/glue.sh
+  checks them.
+- darwin: on an arm64 Mac (LLVM publishes macOS builds for arm64 only), against the
+  pinned macOS SDK (darwinGlueSDK in cmd/pythago-dist/prebuild.go, 26.5); the objects
+  target macOS 11 whatever the SDK. The SDK is licensed for Apple hardware, so they are
+  never built on Linux. ci/darwin.sh glue checks them; ci/darwin.sh glue-update rebuilds
+  them on the Mac and copies them back.
+- Windows: glue DLLs (<abi>-windows_<goarch>.dll), built on any host
+  given -windows-sdk: Wine's headers and import libraries, which `ci/windows-wine.sh sdk`
+  copies to ~/.cache/pythago-ci/windows-sdk (Microsoft's SDK is not redistributable).
+  ci/glue.sh checks them when that directory exists.
+Rebuild and commit them whenever glue/*.c or glue/*.h changes.

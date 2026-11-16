@@ -1,0 +1,17 @@
+goos: linux
+goarch: arm64
+pkg: github.com/moriyoshi/pythago/aio
+BenchmarkChannelBridge/GoToPython/Cap64/Workers32/Bytes4096-4         	   96981	      7464 ns/op	 548.73 MB/s	    133968 msg/s	    2003 B/op	      69 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap64/Workers32/Bytes4096-4         	   92763	      7554 ns/op	 542.21 MB/s	    132374 msg/s	    2006 B/op	      69 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap64/Workers32/Bytes4096-4         	   96123	      7510 ns/op	 545.40 MB/s	    133154 msg/s	    2002 B/op	      69 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap64/Workers32/Bytes65536-4        	   75703	      9189 ns/op	7131.94 MB/s	    108825 msg/s	    2002 B/op	      70 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap64/Workers32/Bytes65536-4        	   76281	     10255 ns/op	6390.48 MB/s	     97511 msg/s	    2003 B/op	      70 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap64/Workers32/Bytes65536-4        	   77074	     10217 ns/op	6414.33 MB/s	     97875 msg/s	    2003 B/op	      70 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap64/Workers32/Bytes4096-4         	   86666	      8339 ns/op	 491.21 MB/s	    119924 msg/s	    6177 B/op	      74 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap64/Workers32/Bytes4096-4         	   84542	      8339 ns/op	 491.17 MB/s	    119914 msg/s	    6178 B/op	      74 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap64/Workers32/Bytes4096-4         	   85504	      8410 ns/op	 487.01 MB/s	    118899 msg/s	    6177 B/op	      74 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap64/Workers32/Bytes65536-4        	   35976	     19371 ns/op	3383.15 MB/s	     51623 msg/s	   67604 B/op	      74 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap64/Workers32/Bytes65536-4        	   37375	     21077 ns/op	3109.43 MB/s	     47446 msg/s	   67603 B/op	      74 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap64/Workers32/Bytes65536-4        	   35653	     19584 ns/op	3346.48 MB/s	     51063 msg/s	   67605 B/op	      75 allocs/op
+PASS
+ok  	github.com/moriyoshi/pythago/aio	10.239s

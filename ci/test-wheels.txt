@@ -1,0 +1,4 @@
+# Binary wheels the aio and asgi tests load (internal/tools/fetchwheels, PYTHAGO_TEST_WHEELS):
+# async Python awaiting native code. Exact pins; both have no runtime dependencies.
+pyreqwest==0.15.1 # Rust on tokio: futures completed from tokio threads (call_soon_threadsafe)
+pyzmq==27.3.0     # bundled libzmq; zmq.asyncio waits on the ZMQ fd with add_reader

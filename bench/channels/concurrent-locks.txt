@@ -1,0 +1,28 @@
+File: pythago-aio-concurrent.test
+Build ID: 46ac3c67e81ae33e1bf2af2b00706fd235e6e5fc
+Type: delay
+Time: 2026-11-16 19:28:37 JST
+Showing nodes accounting for 187.91ms, 100% of 187.91ms total
+Dropped 135 nodes (cum <= 0.94ms)
+Showing top 20 nodes out of 55
+      flat  flat%   sum%        cum   cum%
+  159.67ms 84.97% 84.97%   159.71ms 84.99%  sync.(*Mutex).Unlock (inline)
+   26.69ms 14.20% 99.17%    26.69ms 14.20%  runtime.unlock (partial-inline)
+    1.55ms  0.83%   100%     1.55ms  0.83%  runtime._LostContendedRuntimeLock
+         0     0%   100%     2.77ms  1.47%  github.com/ebitengine/purego.SyscallN
+         0     0%   100%     2.60ms  1.38%  github.com/ebitengine/purego.callbackWrap
+         0     0%   100%     2.77ms  1.47%  github.com/ebitengine/purego.syscall_SyscallN
+         0     0%   100%     1.67ms  0.89%  github.com/moriyoshi/pythago/aio.(*batch[go.shape.struct { github.com/moriyoshi/pythago/aio.token int64; github.com/moriyoshi/pythago/aio.kind int; github.com/moriyoshi/pythago/aio.val interface {}; github.com/moriyoshi/pythago/aio.n int64; github.com/moriyoshi/pythago/aio.data []uint8; github.com/moriyoshi/pythago/aio.pool *[]uint8; github.com/moriyoshi/pythago/aio.msg string; github.com/moriyoshi/pythago/aio.addrs []string }]).take
+         0     0%   100%     1.67ms  0.89%  github.com/moriyoshi/pythago/aio.(*batch[go.shape.struct { github.com/moriyoshi/pythago/aio.token int64; github.com/moriyoshi/pythago/aio.kind int; github.com/moriyoshi/pythago/aio.val interface {}; github.com/moriyoshi/pythago/aio.n int64; github.com/moriyoshi/pythago/aio.data []uint8; github.com/moriyoshi/pythago/aio.pool *[]uint8; github.com/moriyoshi/pythago/aio.msg string; github.com/moriyoshi/pythago/aio.addrs []string }]).wait
+         0     0%   100%   158.39ms 84.29%  github.com/moriyoshi/pythago/aio.(*channelOp).finish
+         0     0%   100%   169.02ms 89.95%  github.com/moriyoshi/pythago/aio.(*channelOp).run
+         0     0%   100%   169.02ms 89.95%  github.com/moriyoshi/pythago/aio.(*typedChannel[go.shape.int64]).prepare.func2
+         0     0%   100%      158ms 84.08%  github.com/moriyoshi/pythago/aio.module.channelModule.func31.gowrap2
+         0     0%   100%     1.88ms  1.00%  github.com/moriyoshi/pythago/aio.module.func8
+         0     0%   100%     1.88ms  1.00%  github.com/moriyoshi/pythago/aio.module.module.func1.func37
+         0     0%   100%     2.77ms  1.47%  github.com/moriyoshi/pythago/aio_test.BenchmarkChannelBridge.func1
+         0     0%   100%     2.77ms  1.47%  github.com/moriyoshi/pythago/aio_test.benchmarkChannelBridge[go.shape.int64]
+         0     0%   100%     2.59ms  1.38%  github.com/moriyoshi/pythago/aio_test.benchmarkChannelBridge[go.shape.int64].func1
+         0     0%   100%     2.77ms  1.47%  github.com/moriyoshi/pythago/aio_test.benchmarkChannelPython
+         0     0%   100%     2.77ms  1.47%  github.com/moriyoshi/pythago/aio_test.benchmarkChannelPython.func1
+         0     0%   100%     2.77ms  1.47%  github.com/moriyoshi/pythago/py.(*Object).Call (inline)

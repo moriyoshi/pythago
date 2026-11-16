@@ -1,0 +1,266 @@
+goos: linux
+goarch: arm64
+pkg: github.com/moriyoshi/pythago/aio
+BenchmarkChannelCore/GoToPython/Cap0-20         	  192832	      1813 ns/op	    551463 msg/s	     472 B/op	       8 allocs/op
+BenchmarkChannelCore/GoToPython/Cap0-20         	  192265	      1805 ns/op	    554033 msg/s	     472 B/op	       8 allocs/op
+BenchmarkChannelCore/GoToPython/Cap0-20         	  173323	      1799 ns/op	    555740 msg/s	     472 B/op	       8 allocs/op
+BenchmarkChannelCore/GoToPython/Cap64-20        	  255702	      1467 ns/op	    681452 msg/s	     472 B/op	       8 allocs/op
+BenchmarkChannelCore/GoToPython/Cap64-20        	  238503	      1395 ns/op	    716620 msg/s	     472 B/op	       8 allocs/op
+BenchmarkChannelCore/GoToPython/Cap64-20        	  228985	      1468 ns/op	    681009 msg/s	     472 B/op	       8 allocs/op
+BenchmarkChannelCore/PythonToGo/Cap0-20         	  192932	      1781 ns/op	    561403 msg/s	     472 B/op	       7 allocs/op
+BenchmarkChannelCore/PythonToGo/Cap0-20         	  213870	      1681 ns/op	    594749 msg/s	     472 B/op	       7 allocs/op
+BenchmarkChannelCore/PythonToGo/Cap0-20         	  189399	      1780 ns/op	    561653 msg/s	     472 B/op	       7 allocs/op
+BenchmarkChannelCore/PythonToGo/Cap64-20        	  254311	      1348 ns/op	    741995 msg/s	     472 B/op	       7 allocs/op
+BenchmarkChannelCore/PythonToGo/Cap64-20        	  287865	      1459 ns/op	    685168 msg/s	     472 B/op	       7 allocs/op
+BenchmarkChannelCore/PythonToGo/Cap64-20        	  246760	      1394 ns/op	    717496 msg/s	     472 B/op	       7 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap0/Workers1/Int64-20         	    8944	     39285 ns/op	     25455 msg/s	    2151 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap0/Workers1/Int64-20         	   14074	     35041 ns/op	     28538 msg/s	    2154 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap0/Workers1/Int64-20         	   10000	     35292 ns/op	     28335 msg/s	    2160 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap0/Workers1/Bytes64-20       	   12861	     38867 ns/op	   1.65 MB/s	     25729 msg/s	    2175 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap0/Workers1/Bytes64-20       	    9033	     39445 ns/op	   1.62 MB/s	     25352 msg/s	    2174 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap0/Workers1/Bytes64-20       	   12872	     41209 ns/op	   1.55 MB/s	     24267 msg/s	    2173 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap0/Workers1/Bytes4096-20     	   10909	     44294 ns/op	  92.47 MB/s	     22576 msg/s	    2174 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap0/Workers1/Bytes4096-20     	    8931	     43219 ns/op	  94.77 MB/s	     23138 msg/s	    2173 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap0/Workers1/Bytes4096-20     	    8204	     41924 ns/op	  97.70 MB/s	     23853 msg/s	    2173 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap0/Workers1/Bytes65536-20    	    8334	     47788 ns/op	1371.38 MB/s	     20926 msg/s	    2172 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap0/Workers1/Bytes65536-20    	   11330	     42897 ns/op	1527.76 MB/s	     23312 msg/s	    2173 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap0/Workers1/Bytes65536-20    	   12211	     48750 ns/op	1344.32 MB/s	     20513 msg/s	    2172 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap0/Workers32/Int64-20        	   44677	      8453 ns/op	    118304 msg/s	    1986 B/op	      70 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap0/Workers32/Int64-20        	   43624	      8193 ns/op	    122058 msg/s	    1982 B/op	      69 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap0/Workers32/Int64-20        	   43172	      8464 ns/op	    118154 msg/s	    1981 B/op	      69 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap0/Workers32/Bytes64-20      	   45670	      8661 ns/op	   7.39 MB/s	    115465 msg/s	    2007 B/op	      69 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap0/Workers32/Bytes64-20      	   44529	      8486 ns/op	   7.54 MB/s	    117839 msg/s	    2005 B/op	      69 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap0/Workers32/Bytes64-20      	   43390	      8643 ns/op	   7.41 MB/s	    115705 msg/s	    2005 B/op	      69 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap0/Workers32/Bytes4096-20    	   44822	      8586 ns/op	 477.04 MB/s	    116466 msg/s	    2008 B/op	      69 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap0/Workers32/Bytes4096-20    	   39663	      8419 ns/op	 486.50 MB/s	    118775 msg/s	    2010 B/op	      70 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap0/Workers32/Bytes4096-20    	   44395	      8050 ns/op	 508.85 MB/s	    124230 msg/s	    2007 B/op	      69 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap0/Workers32/Bytes65536-20   	   33271	     11228 ns/op	5836.99 MB/s	     89065 msg/s	    2008 B/op	      70 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap0/Workers32/Bytes65536-20   	   33738	     12299 ns/op	5328.36 MB/s	     81304 msg/s	    2008 B/op	      70 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap0/Workers32/Bytes65536-20   	   33608	     10459 ns/op	6265.76 MB/s	     95608 msg/s	    2015 B/op	      70 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1/Workers1/Int64-20         	    9164	     39211 ns/op	     25503 msg/s	    2154 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1/Workers1/Int64-20         	   12298	     38381 ns/op	     26055 msg/s	    2155 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1/Workers1/Int64-20         	   13000	     26528 ns/op	     37697 msg/s	    2147 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1/Workers1/Bytes64-20       	   13686	     33210 ns/op	   1.93 MB/s	     30111 msg/s	    2171 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1/Workers1/Bytes64-20       	   13580	     43618 ns/op	   1.47 MB/s	     22926 msg/s	    2175 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1/Workers1/Bytes64-20       	    8443	     37818 ns/op	   1.69 MB/s	     26442 msg/s	    2179 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1/Workers1/Bytes4096-20     	   13140	     28429 ns/op	 144.08 MB/s	     35175 msg/s	    2171 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1/Workers1/Bytes4096-20     	   12242	     29223 ns/op	 140.16 MB/s	     34220 msg/s	    2172 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1/Workers1/Bytes4096-20     	   12610	     41724 ns/op	  98.17 MB/s	     23967 msg/s	    2177 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1/Workers1/Bytes65536-20    	   11698	     45799 ns/op	1430.94 MB/s	     21834 msg/s	    2174 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1/Workers1/Bytes65536-20    	    6820	     45907 ns/op	1427.59 MB/s	     21783 msg/s	    2175 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1/Workers1/Bytes65536-20    	   12948	     46152 ns/op	1420.01 MB/s	     21668 msg/s	    2174 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1/Workers32/Int64-20        	   44403	      8596 ns/op	    116327 msg/s	    1980 B/op	      69 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1/Workers32/Int64-20        	   42019	      9280 ns/op	    107764 msg/s	    1978 B/op	      70 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1/Workers32/Int64-20        	   43376	      9108 ns/op	    109793 msg/s	    1978 B/op	      69 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1/Workers32/Bytes64-20      	   37693	      9560 ns/op	   6.69 MB/s	    104607 msg/s	    1998 B/op	      69 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1/Workers32/Bytes64-20      	   41413	      9032 ns/op	   7.09 MB/s	    110718 msg/s	    2006 B/op	      70 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1/Workers32/Bytes64-20      	   43233	      9176 ns/op	   6.98 MB/s	    108985 msg/s	    2001 B/op	      69 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1/Workers32/Bytes4096-20    	   39926	      8890 ns/op	 460.75 MB/s	    112487 msg/s	    2002 B/op	      69 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1/Workers32/Bytes4096-20    	   37221	      8280 ns/op	 494.68 MB/s	    120771 msg/s	    2005 B/op	      69 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1/Workers32/Bytes4096-20    	   44166	      9626 ns/op	 425.52 MB/s	    103887 msg/s	    2004 B/op	      70 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1/Workers32/Bytes65536-20   	   35217	     10761 ns/op	6089.92 MB/s	     92925 msg/s	    2012 B/op	      70 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1/Workers32/Bytes65536-20   	   32660	     11890 ns/op	5511.88 MB/s	     84105 msg/s	    2005 B/op	      70 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1/Workers32/Bytes65536-20   	   32973	     10969 ns/op	5974.55 MB/s	     91164 msg/s	    2005 B/op	      69 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap64/Workers1/Int64-20        	   15205	     41506 ns/op	     24093 msg/s	    2152 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap64/Workers1/Int64-20        	   10000	     40203 ns/op	     24874 msg/s	    2153 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap64/Workers1/Int64-20        	   12782	     36660 ns/op	     27278 msg/s	    2150 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap64/Workers1/Bytes64-20      	    9799	     39368 ns/op	   1.63 MB/s	     25401 msg/s	    2176 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap64/Workers1/Bytes64-20      	   13563	     38401 ns/op	   1.67 MB/s	     26041 msg/s	    2183 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap64/Workers1/Bytes64-20      	   12848	     25867 ns/op	   2.47 MB/s	     38659 msg/s	    2172 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap64/Workers1/Bytes4096-20    	   13572	     41974 ns/op	  97.58 MB/s	     23824 msg/s	    2176 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap64/Workers1/Bytes4096-20    	   13749	     26407 ns/op	 155.11 MB/s	     37869 msg/s	    2171 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap64/Workers1/Bytes4096-20    	    9224	     36833 ns/op	 111.20 MB/s	     27149 msg/s	    2176 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap64/Workers1/Bytes65536-20   	    6775	     46579 ns/op	1406.99 MB/s	     21469 msg/s	    2175 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap64/Workers1/Bytes65536-20   	   12284	     26131 ns/op	2507.99 MB/s	     38269 msg/s	    2172 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap64/Workers1/Bytes65536-20   	    7827	     46327 ns/op	1414.63 MB/s	     21585 msg/s	    2174 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap64/Workers32/Int64-20       	   41260	      9316 ns/op	    107341 msg/s	    1973 B/op	      69 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap64/Workers32/Int64-20       	   38965	      8345 ns/op	    119836 msg/s	    1978 B/op	      69 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap64/Workers32/Int64-20       	   45609	      8979 ns/op	    111375 msg/s	    1973 B/op	      69 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap64/Workers32/Bytes64-20     	   42092	      9128 ns/op	   7.01 MB/s	    109557 msg/s	    1997 B/op	      69 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap64/Workers32/Bytes64-20     	   44613	      8006 ns/op	   7.99 MB/s	    124910 msg/s	    1999 B/op	      69 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap64/Workers32/Bytes64-20     	   45172	      8621 ns/op	   7.42 MB/s	    115997 msg/s	    1999 B/op	      69 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap64/Workers32/Bytes4096-20   	   44985	      8513 ns/op	 481.17 MB/s	    117473 msg/s	    2001 B/op	      69 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap64/Workers32/Bytes4096-20   	   39820	      9255 ns/op	 442.58 MB/s	    108052 msg/s	    1996 B/op	      69 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap64/Workers32/Bytes4096-20   	   43753	      9221 ns/op	 444.20 MB/s	    108447 msg/s	    1997 B/op	      69 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap64/Workers32/Bytes65536-20  	   35822	     10298 ns/op	6363.81 MB/s	     97104 msg/s	    2005 B/op	      70 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap64/Workers32/Bytes65536-20  	   34560	     11160 ns/op	5872.66 MB/s	     89610 msg/s	    1999 B/op	      69 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap64/Workers32/Bytes65536-20  	   36642	     10094 ns/op	6492.69 MB/s	     99071 msg/s	    2004 B/op	      69 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1024/Workers1/Int64-20      	    7502	     41388 ns/op	     24162 msg/s	    2154 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1024/Workers1/Int64-20      	   15488	     43560 ns/op	     22957 msg/s	    2151 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1024/Workers1/Int64-20      	   13605	     40775 ns/op	     24525 msg/s	    2152 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1024/Workers1/Bytes64-20    	   12625	     29089 ns/op	   2.20 MB/s	     34377 msg/s	    2172 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1024/Workers1/Bytes64-20    	   13444	     44738 ns/op	   1.43 MB/s	     22353 msg/s	    2176 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1024/Workers1/Bytes64-20    	   14193	     40165 ns/op	   1.59 MB/s	     24898 msg/s	    2178 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1024/Workers1/Bytes4096-20  	    8635	     42315 ns/op	  96.80 MB/s	     23632 msg/s	    2176 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1024/Workers1/Bytes4096-20  	   13504	     43212 ns/op	  94.79 MB/s	     23142 msg/s	    2176 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1024/Workers1/Bytes4096-20  	   10000	     32202 ns/op	 127.20 MB/s	     31054 msg/s	    2175 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1024/Workers1/Bytes65536-20 	    8678	     45908 ns/op	1427.55 MB/s	     21783 msg/s	    2173 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1024/Workers1/Bytes65536-20 	   12754	     28275 ns/op	2317.77 MB/s	     35366 msg/s	    2172 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1024/Workers1/Bytes65536-20 	    7330	     43366 ns/op	1511.23 MB/s	     23060 msg/s	    2175 B/op	      89 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1024/Workers32/Int64-20     	   46606	      8588 ns/op	    116444 msg/s	    1974 B/op	      69 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1024/Workers32/Int64-20     	   41352	      9013 ns/op	    110953 msg/s	    1974 B/op	      69 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1024/Workers32/Int64-20     	   43612	      7947 ns/op	    125828 msg/s	    1975 B/op	      69 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1024/Workers32/Bytes64-20   	   38061	      8329 ns/op	   7.68 MB/s	    120068 msg/s	    2003 B/op	      69 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1024/Workers32/Bytes64-20   	   41654	      9114 ns/op	   7.02 MB/s	    109720 msg/s	    2000 B/op	      69 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1024/Workers32/Bytes64-20   	   44595	      8222 ns/op	   7.78 MB/s	    121625 msg/s	    1999 B/op	      69 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1024/Workers32/Bytes4096-20 	   43573	      9169 ns/op	 446.71 MB/s	    109060 msg/s	    1999 B/op	      69 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1024/Workers32/Bytes4096-20 	   41331	      9131 ns/op	 448.59 MB/s	    109519 msg/s	    2001 B/op	      70 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1024/Workers32/Bytes4096-20 	   41475	      8367 ns/op	 489.52 MB/s	    119511 msg/s	    2002 B/op	      69 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1024/Workers32/Bytes65536-20         	   32346	     11946 ns/op	5485.84 MB/s	     83707 msg/s	    2002 B/op	      70 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1024/Workers32/Bytes65536-20         	   32412	     10419 ns/op	6289.87 MB/s	     95976 msg/s	    2004 B/op	      69 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap1024/Workers32/Bytes65536-20         	   31734	     10906 ns/op	6009.23 MB/s	     91694 msg/s	    1999 B/op	      69 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap0/Workers1/Int64-20                  	   10000	     40093 ns/op	     24942 msg/s	    2192 B/op	      92 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap0/Workers1/Int64-20                  	    8854	     47212 ns/op	     21181 msg/s	    2190 B/op	      92 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap0/Workers1/Int64-20                  	    7686	     44180 ns/op	     22635 msg/s	    2190 B/op	      92 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap0/Workers1/Bytes64-20                	   10518	     45994 ns/op	   1.39 MB/s	     21742 msg/s	    2311 B/op	      94 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap0/Workers1/Bytes64-20                	    7405	     45334 ns/op	   1.41 MB/s	     22058 msg/s	    2310 B/op	      94 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap0/Workers1/Bytes64-20                	   10411	     42418 ns/op	   1.51 MB/s	     23575 msg/s	    2311 B/op	      94 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap0/Workers1/Bytes4096-20              	    6806	     46970 ns/op	  87.20 MB/s	     21290 msg/s	    6349 B/op	      94 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap0/Workers1/Bytes4096-20              	    7341	     44980 ns/op	  91.06 MB/s	     22232 msg/s	    6350 B/op	      94 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap0/Workers1/Bytes4096-20              	    7694	     46046 ns/op	  88.95 MB/s	     21717 msg/s	    6349 B/op	      94 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap0/Workers1/Bytes65536-20             	    5164	     81882 ns/op	 800.37 MB/s	     12213 msg/s	   67915 B/op	      94 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap0/Workers1/Bytes65536-20             	    5145	     77847 ns/op	 841.85 MB/s	     12846 msg/s	   67918 B/op	      94 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap0/Workers1/Bytes65536-20             	    6418	     59912 ns/op	1093.87 MB/s	     16691 msg/s	   67931 B/op	      94 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap0/Workers32/Int64-20                 	   44353	      8138 ns/op	    122884 msg/s	    2025 B/op	      73 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap0/Workers32/Int64-20                 	   42450	      8488 ns/op	    117818 msg/s	    2023 B/op	      73 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap0/Workers32/Int64-20                 	   43104	      8147 ns/op	    122747 msg/s	    2022 B/op	      72 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap0/Workers32/Bytes64-20               	   41846	      8495 ns/op	   7.53 MB/s	    117719 msg/s	    2142 B/op	      74 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap0/Workers32/Bytes64-20               	   42154	      8730 ns/op	   7.33 MB/s	    114544 msg/s	    2145 B/op	      75 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap0/Workers32/Bytes64-20               	   36104	      8906 ns/op	   7.19 MB/s	    112287 msg/s	    2145 B/op	      75 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap0/Workers32/Bytes4096-20             	   31914	     11450 ns/op	 357.74 MB/s	     87338 msg/s	    6174 B/op	      74 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap0/Workers32/Bytes4096-20             	   36624	     10578 ns/op	 387.20 MB/s	     94532 msg/s	    6178 B/op	      74 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap0/Workers32/Bytes4096-20             	   36786	     10692 ns/op	 383.10 MB/s	     93531 msg/s	    6177 B/op	      74 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap0/Workers32/Bytes65536-20            	   11700	     31256 ns/op	2096.76 MB/s	     31994 msg/s	   67682 B/op	      75 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap0/Workers32/Bytes65536-20            	   11583	     42414 ns/op	1545.14 MB/s	     23577 msg/s	   67682 B/op	      75 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap0/Workers32/Bytes65536-20            	   10000	     32251 ns/op	2032.09 MB/s	     31007 msg/s	   67683 B/op	      75 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1/Workers1/Int64-20                  	   13576	     25829 ns/op	     38716 msg/s	    2188 B/op	      92 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1/Workers1/Int64-20                  	    8034	     41757 ns/op	     23948 msg/s	    2195 B/op	      92 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1/Workers1/Int64-20                  	    7704	     39808 ns/op	     25121 msg/s	    2195 B/op	      92 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1/Workers1/Bytes64-20                	   11053	     42841 ns/op	   1.49 MB/s	     23342 msg/s	    2312 B/op	      94 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1/Workers1/Bytes64-20                	   10000	     41318 ns/op	   1.55 MB/s	     24203 msg/s	    2314 B/op	      94 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1/Workers1/Bytes64-20                	   13466	     27597 ns/op	   2.32 MB/s	     36236 msg/s	    2309 B/op	      94 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1/Workers1/Bytes4096-20              	   12501	     44309 ns/op	  92.44 MB/s	     22569 msg/s	    6356 B/op	      94 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1/Workers1/Bytes4096-20              	   10000	     45123 ns/op	  90.77 MB/s	     22161 msg/s	    6355 B/op	      94 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1/Workers1/Bytes4096-20              	    7965	     48328 ns/op	  84.75 MB/s	     20692 msg/s	    6352 B/op	      94 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1/Workers1/Bytes65536-20             	    3870	     80706 ns/op	 812.03 MB/s	     12391 msg/s	   67920 B/op	      94 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1/Workers1/Bytes65536-20             	    6486	     63214 ns/op	1036.73 MB/s	     15819 msg/s	   67926 B/op	      94 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1/Workers1/Bytes65536-20             	    4263	     80552 ns/op	 813.58 MB/s	     12414 msg/s	   67915 B/op	      94 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1/Workers32/Int64-20                 	   43827	      8070 ns/op	    123914 msg/s	    2021 B/op	      72 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1/Workers32/Int64-20                 	   45056	      8060 ns/op	    124064 msg/s	    2020 B/op	      72 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1/Workers32/Int64-20                 	   42654	      8394 ns/op	    119137 msg/s	    2027 B/op	      73 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1/Workers32/Bytes64-20               	   43255	      8845 ns/op	   7.24 MB/s	    113054 msg/s	    2138 B/op	      74 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1/Workers32/Bytes64-20               	   42801	      8295 ns/op	   7.72 MB/s	    120553 msg/s	    2142 B/op	      74 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1/Workers32/Bytes64-20               	   30936	      9767 ns/op	   6.55 MB/s	    102387 msg/s	    2136 B/op	      74 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1/Workers32/Bytes4096-20             	   31850	     10155 ns/op	 403.35 MB/s	     98474 msg/s	    6174 B/op	      74 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1/Workers32/Bytes4096-20             	   35734	     11216 ns/op	 365.18 MB/s	     89155 msg/s	    6171 B/op	      74 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1/Workers32/Bytes4096-20             	   34783	     10222 ns/op	 400.71 MB/s	     97829 msg/s	    6177 B/op	      74 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1/Workers32/Bytes65536-20            	   13010	     30136 ns/op	2174.69 MB/s	     33183 msg/s	   67677 B/op	      75 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1/Workers32/Bytes65536-20            	   12150	     42305 ns/op	1549.15 MB/s	     23638 msg/s	   67684 B/op	      75 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1/Workers32/Bytes65536-20            	   10000	     30462 ns/op	2151.42 MB/s	     32828 msg/s	   67675 B/op	      75 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap64/Workers1/Int64-20                 	    7516	     46302 ns/op	     21597 msg/s	    2193 B/op	      92 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap64/Workers1/Int64-20                 	   15284	     27131 ns/op	     36858 msg/s	    2188 B/op	      92 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap64/Workers1/Int64-20                 	   10000	     43278 ns/op	     23106 msg/s	    2193 B/op	      92 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap64/Workers1/Bytes64-20               	   11776	     41880 ns/op	   1.53 MB/s	     23878 msg/s	    2314 B/op	      94 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap64/Workers1/Bytes64-20               	   11130	     40772 ns/op	   1.57 MB/s	     24526 msg/s	    2316 B/op	      94 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap64/Workers1/Bytes64-20               	    9291	     38724 ns/op	   1.65 MB/s	     25824 msg/s	    2313 B/op	      94 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap64/Workers1/Bytes4096-20             	   11934	     42677 ns/op	  95.98 MB/s	     23432 msg/s	    6357 B/op	      94 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap64/Workers1/Bytes4096-20             	    8398	     40121 ns/op	 102.09 MB/s	     24925 msg/s	    6362 B/op	      94 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap64/Workers1/Bytes4096-20             	   13364	     27826 ns/op	 147.20 MB/s	     35937 msg/s	    6348 B/op	      94 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap64/Workers1/Bytes65536-20            	    4150	     76297 ns/op	 858.96 MB/s	     13107 msg/s	   67923 B/op	      94 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap64/Workers1/Bytes65536-20            	    6585	     82641 ns/op	 793.02 MB/s	     12100 msg/s	   67920 B/op	      94 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap64/Workers1/Bytes65536-20            	    5776	     77683 ns/op	 843.63 MB/s	     12873 msg/s	   67923 B/op	      94 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap64/Workers32/Int64-20                	   43615	      8184 ns/op	    122190 msg/s	    2018 B/op	      72 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap64/Workers32/Int64-20                	   46060	      8333 ns/op	    119999 msg/s	    2017 B/op	      72 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap64/Workers32/Int64-20                	   45640	      8124 ns/op	    123087 msg/s	    2016 B/op	      72 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap64/Workers32/Bytes64-20              	   41787	      8087 ns/op	   7.91 MB/s	    123662 msg/s	    2135 B/op	      74 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap64/Workers32/Bytes64-20              	   44652	      8161 ns/op	   7.84 MB/s	    122540 msg/s	    2137 B/op	      74 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap64/Workers32/Bytes64-20              	   42075	      8933 ns/op	   7.16 MB/s	    111941 msg/s	    2134 B/op	      74 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap64/Workers32/Bytes4096-20            	   35887	     11216 ns/op	 365.20 MB/s	     89161 msg/s	    6168 B/op	      74 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap64/Workers32/Bytes4096-20            	   34791	     10066 ns/op	 406.92 MB/s	     99345 msg/s	    6171 B/op	      74 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap64/Workers32/Bytes4096-20            	   37363	     11094 ns/op	 369.21 MB/s	     90140 msg/s	    6170 B/op	      74 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap64/Workers32/Bytes65536-20           	   12332	     42206 ns/op	1552.78 MB/s	     23694 msg/s	   67684 B/op	      75 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap64/Workers32/Bytes65536-20           	    8203	     43409 ns/op	1509.74 MB/s	     23037 msg/s	   67683 B/op	      75 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap64/Workers32/Bytes65536-20           	    8050	     42354 ns/op	1547.36 MB/s	     23611 msg/s	   67684 B/op	      75 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1024/Workers1/Int64-20               	   13906	     25808 ns/op	     38747 msg/s	    2188 B/op	      92 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1024/Workers1/Int64-20               	   15742	     25780 ns/op	     38790 msg/s	    2188 B/op	      92 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1024/Workers1/Int64-20               	    9212	     39657 ns/op	     25216 msg/s	    2199 B/op	      92 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1024/Workers1/Bytes64-20             	    7995	     40488 ns/op	   1.58 MB/s	     24699 msg/s	    2317 B/op	      94 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1024/Workers1/Bytes64-20             	    9290	     40881 ns/op	   1.57 MB/s	     24461 msg/s	    2315 B/op	      94 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1024/Workers1/Bytes64-20             	   13275	     24549 ns/op	   2.61 MB/s	     40735 msg/s	    2308 B/op	      94 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1024/Workers1/Bytes4096-20           	   10000	     44589 ns/op	  91.86 MB/s	     22427 msg/s	    6355 B/op	      94 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1024/Workers1/Bytes4096-20           	    7965	     46141 ns/op	  88.77 MB/s	     21673 msg/s	    6353 B/op	      94 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1024/Workers1/Bytes4096-20           	    7353	     45053 ns/op	  90.92 MB/s	     22196 msg/s	    6355 B/op	      94 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1024/Workers1/Bytes65536-20          	    4548	     66604 ns/op	 983.96 MB/s	     15014 msg/s	   67925 B/op	      94 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1024/Workers1/Bytes65536-20          	    5655	     64621 ns/op	1014.15 MB/s	     15475 msg/s	   67931 B/op	      94 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1024/Workers1/Bytes65536-20          	    5652	     71507 ns/op	 916.49 MB/s	     13985 msg/s	   67929 B/op	      94 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1024/Workers32/Int64-20              	   43508	      9138 ns/op	    109438 msg/s	    2013 B/op	      72 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1024/Workers32/Int64-20              	   33436	      9011 ns/op	    110981 msg/s	    2013 B/op	      72 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1024/Workers32/Int64-20              	   44406	      8945 ns/op	    111792 msg/s	    2016 B/op	      72 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1024/Workers32/Bytes64-20            	   43666	      9254 ns/op	   6.92 MB/s	    108062 msg/s	    2134 B/op	      74 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1024/Workers32/Bytes64-20            	   37516	      8581 ns/op	   7.46 MB/s	    116536 msg/s	    2135 B/op	      74 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1024/Workers32/Bytes64-20            	   43940	      9036 ns/op	   7.08 MB/s	    110671 msg/s	    2132 B/op	      74 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1024/Workers32/Bytes4096-20          	   36402	     10515 ns/op	 389.53 MB/s	     95100 msg/s	    6171 B/op	      74 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1024/Workers32/Bytes4096-20          	   33704	      9818 ns/op	 417.20 MB/s	    101855 msg/s	    6173 B/op	      74 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1024/Workers32/Bytes4096-20          	   35764	     11045 ns/op	 370.86 MB/s	     90541 msg/s	    6167 B/op	      74 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1024/Workers32/Bytes65536-20         	   11460	     43752 ns/op	1497.90 MB/s	     22856 msg/s	   67680 B/op	      75 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1024/Workers32/Bytes65536-20         	    8205	     43969 ns/op	1490.52 MB/s	     22743 msg/s	   67682 B/op	      75 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap1024/Workers32/Bytes65536-20         	    9507	     41932 ns/op	1562.93 MB/s	     23848 msg/s	   67685 B/op	      75 allocs/op
+BenchmarkNativeChannel/Send/Cap0/Int64-20                                 	 2277542	       167.0 ns/op	   5989567 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Send/Cap0/Int64-20                                 	 2504334	       143.4 ns/op	   6974212 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Send/Cap0/Int64-20                                 	 2234974	       193.4 ns/op	   5171779 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Send/Cap0/Bytes4096-20                             	 2312118	       185.9 ns/op	22039.10 MB/s	   5380640 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Send/Cap0/Bytes4096-20                             	 1937727	       198.4 ns/op	20648.83 MB/s	   5041217 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Send/Cap0/Bytes4096-20                             	 1847853	       170.8 ns/op	23976.03 MB/s	   5853524 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Send/Cap1/Int64-20                                 	 2780054	       145.7 ns/op	   6861487 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Send/Cap1/Int64-20                                 	 2399464	       140.3 ns/op	   7127995 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Send/Cap1/Int64-20                                 	 3231112	       124.2 ns/op	   8052662 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Send/Cap1/Bytes4096-20                             	 2856072	       121.6 ns/op	33670.93 MB/s	   8220442 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Send/Cap1/Bytes4096-20                             	 3234202	       145.2 ns/op	28211.08 MB/s	   6887471 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Send/Cap1/Bytes4096-20                             	 2842797	       142.7 ns/op	28709.54 MB/s	   7009164 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Send/Cap64/Int64-20                                	 7319923	        50.65 ns/op	  19742253 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Send/Cap64/Int64-20                                	 7660095	        49.26 ns/op	  20299851 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Send/Cap64/Int64-20                                	 7340664	        48.58 ns/op	  20583576 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Send/Cap64/Bytes4096-20                            	 7088001	        50.39 ns/op	81287.20 MB/s	  19845508 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Send/Cap64/Bytes4096-20                            	 6923380	        53.07 ns/op	77177.82 MB/s	  18842242 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Send/Cap64/Bytes4096-20                            	 6744717	        52.84 ns/op	77510.22 MB/s	  18923393 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Send/Cap1024/Int64-20                              	 5206192	        71.01 ns/op	  14081656 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Send/Cap1024/Int64-20                              	 5464982	        78.76 ns/op	  12696687 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Send/Cap1024/Int64-20                              	 4999168	        75.64 ns/op	  13221020 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Send/Cap1024/Bytes4096-20                          	 1000000	       309.8 ns/op	13220.88 MB/s	   3227753 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Send/Cap1024/Bytes4096-20                          	 1685979	       187.6 ns/op	21835.94 MB/s	   5331040 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Send/Cap1024/Bytes4096-20                          	 2130229	       262.6 ns/op	15597.40 MB/s	   3807960 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap0/Int64-20                              	 2836630	       143.7 ns/op	   6961166 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap0/Int64-20                              	 2148099	       144.1 ns/op	   6938603 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap0/Int64-20                              	 2183049	       148.5 ns/op	   6733099 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap0/Bytes4096-20                          	 2227304	       164.1 ns/op	24955.37 MB/s	   6092619 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap0/Bytes4096-20                          	 2273000	       144.3 ns/op	28375.99 MB/s	   6927732 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap0/Bytes4096-20                          	 2424200	       172.2 ns/op	23789.55 MB/s	   5807996 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap1/Int64-20                              	 3404622	       132.0 ns/op	   7573575 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap1/Int64-20                              	 2854610	       117.9 ns/op	   8479053 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap1/Int64-20                              	 2965182	       133.2 ns/op	   7504825 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap1/Bytes4096-20                          	 3061789	       140.1 ns/op	29229.58 MB/s	   7136127 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap1/Bytes4096-20                          	 3463642	       124.0 ns/op	33043.52 MB/s	   8067266 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap1/Bytes4096-20                          	 2593402	       120.5 ns/op	33980.72 MB/s	   8296074 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap64/Int64-20                             	 7785930	        49.39 ns/op	  20245687 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap64/Int64-20                             	 7869159	        50.01 ns/op	  19997297 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap64/Int64-20                             	 7362584	        47.84 ns/op	  20901346 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap64/Bytes4096-20                         	 6852626	        49.97 ns/op	81972.67 MB/s	  20012858 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap64/Bytes4096-20                         	 6970486	        52.55 ns/op	77939.68 MB/s	  19028242 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap64/Bytes4096-20                         	 6872095	        52.90 ns/op	77427.54 MB/s	  18903209 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap1024/Int64-20                           	 5284005	        78.51 ns/op	  12737319 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap1024/Int64-20                           	 5064067	        80.21 ns/op	  12467452 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap1024/Int64-20                           	 4466972	        90.90 ns/op	  11001511 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap1024/Bytes4096-20                       	 4378023	       247.1 ns/op	16579.00 MB/s	   4047608 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap1024/Bytes4096-20                       	 2605156	       254.1 ns/op	16120.97 MB/s	   3935783 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap1024/Bytes4096-20                       	 1457214	       313.0 ns/op	13087.91 MB/s	   3195291 msg/s	       0 B/op	       0 allocs/op
+BenchmarkAsyncioQueue/Cap1-20                                             	   54465	      6571 ns/op	    152195 msg/s	     768 B/op	      36 allocs/op
+BenchmarkAsyncioQueue/Cap1-20                                             	   55771	      6486 ns/op	    154170 msg/s	     769 B/op	      36 allocs/op
+BenchmarkAsyncioQueue/Cap1-20                                             	   55058	      6458 ns/op	    154848 msg/s	     768 B/op	      36 allocs/op
+BenchmarkAsyncioQueue/Cap64-20                                            	  614482	       585.9 ns/op	   1706871 msg/s	      12 B/op	       0 allocs/op
+BenchmarkAsyncioQueue/Cap64-20                                            	  608002	       578.3 ns/op	   1729183 msg/s	      12 B/op	       0 allocs/op
+BenchmarkAsyncioQueue/Cap64-20                                            	  614425	       581.4 ns/op	   1720033 msg/s	      12 B/op	       0 allocs/op
+BenchmarkAsyncioQueue/Cap1024-20                                          	  618146	       497.4 ns/op	   2010457 msg/s	       0 B/op	       0 allocs/op
+BenchmarkAsyncioQueue/Cap1024-20                                          	  716589	       498.9 ns/op	   2004599 msg/s	       0 B/op	       0 allocs/op
+BenchmarkAsyncioQueue/Cap1024-20                                          	  710961	       541.6 ns/op	   1846435 msg/s	       0 B/op	       0 allocs/op
+PASS
+ok  	github.com/moriyoshi/pythago/aio	149.123s

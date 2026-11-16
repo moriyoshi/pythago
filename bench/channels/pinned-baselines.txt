@@ -1,0 +1,77 @@
+goos: linux
+goarch: arm64
+pkg: github.com/moriyoshi/pythago/aio
+BenchmarkChannelCore/GoToPython/Cap0-4         	  411265	      1126 ns/op	    888279 msg/s	     472 B/op	       8 allocs/op
+BenchmarkChannelCore/GoToPython/Cap0-4         	  407665	      1117 ns/op	    895022 msg/s	     472 B/op	       8 allocs/op
+BenchmarkChannelCore/GoToPython/Cap0-4         	  410821	      1118 ns/op	    894645 msg/s	     472 B/op	       8 allocs/op
+BenchmarkChannelCore/GoToPython/Cap64-4        	  489222	       903.7 ns/op	   1106555 msg/s	     472 B/op	       8 allocs/op
+BenchmarkChannelCore/GoToPython/Cap64-4        	  519097	       908.4 ns/op	   1100858 msg/s	     472 B/op	       8 allocs/op
+BenchmarkChannelCore/GoToPython/Cap64-4        	  501596	       905.0 ns/op	   1104919 msg/s	     472 B/op	       8 allocs/op
+BenchmarkChannelCore/PythonToGo/Cap0-4         	  397216	      1130 ns/op	    885016 msg/s	     472 B/op	       7 allocs/op
+BenchmarkChannelCore/PythonToGo/Cap0-4         	  399478	      1128 ns/op	    886638 msg/s	     472 B/op	       7 allocs/op
+BenchmarkChannelCore/PythonToGo/Cap0-4         	  412681	      1135 ns/op	    880954 msg/s	     472 B/op	       7 allocs/op
+BenchmarkChannelCore/PythonToGo/Cap64-4        	  502504	       906.7 ns/op	   1102944 msg/s	     472 B/op	       7 allocs/op
+BenchmarkChannelCore/PythonToGo/Cap64-4        	  511293	       923.6 ns/op	   1082706 msg/s	     472 B/op	       7 allocs/op
+BenchmarkChannelCore/PythonToGo/Cap64-4        	  519285	       928.9 ns/op	   1076570 msg/s	     472 B/op	       7 allocs/op
+BenchmarkNativeChannel/Send/Cap0/Int64-4       	 3716276	       131.1 ns/op	   7628105 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Send/Cap0/Int64-4       	 3765532	       134.3 ns/op	   7444344 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Send/Cap0/Int64-4       	 3771978	       127.5 ns/op	   7840430 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Send/Cap0/Bytes4096-4   	 3778228	       133.6 ns/op	30647.85 MB/s	   7482386 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Send/Cap0/Bytes4096-4   	 3776758	       132.0 ns/op	31019.67 MB/s	   7573161 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Send/Cap0/Bytes4096-4   	 3767566	       127.2 ns/op	32207.09 MB/s	   7863060 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Send/Cap1/Int64-4       	 4866692	        99.02 ns/op	  10099428 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Send/Cap1/Int64-4       	 4874037	        98.63 ns/op	  10138558 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Send/Cap1/Int64-4       	 4863128	        98.89 ns/op	  10112591 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Send/Cap1/Bytes4096-4   	 4780664	        98.63 ns/op	41528.16 MB/s	  10138710 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Send/Cap1/Bytes4096-4   	 4866990	        98.73 ns/op	41486.85 MB/s	  10128625 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Send/Cap1/Bytes4096-4   	 4869526	        98.77 ns/op	41471.70 MB/s	  10124927 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Send/Cap64/Int64-4      	10849298	        44.37 ns/op	  22536002 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Send/Cap64/Int64-4      	10774578	        44.36 ns/op	  22542791 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Send/Cap64/Int64-4      	10857924	        44.68 ns/op	  22379537 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Send/Cap64/Bytes4096-4  	10670103	        44.98 ns/op	91054.50 MB/s	  22230101 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Send/Cap64/Bytes4096-4  	10652620	        45.01 ns/op	90999.83 MB/s	  22216755 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Send/Cap64/Bytes4096-4  	10640376	        44.84 ns/op	91357.15 MB/s	  22303991 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Send/Cap1024/Int64-4    	 6177428	        77.41 ns/op	  12917865 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Send/Cap1024/Int64-4    	 5964728	        81.05 ns/op	  12337985 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Send/Cap1024/Int64-4    	 5337990	        84.63 ns/op	  11816425 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Send/Cap1024/Bytes4096-4         	 5036022	        91.29 ns/op	44866.33 MB/s	  10953693 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Send/Cap1024/Bytes4096-4         	 5142982	        99.72 ns/op	41075.39 MB/s	  10028171 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Send/Cap1024/Bytes4096-4         	 5182558	        88.47 ns/op	46296.49 MB/s	  11302853 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap0/Int64-4             	 3672002	       127.7 ns/op	   7827814 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap0/Int64-4             	 3767352	       130.8 ns/op	   7645599 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap0/Int64-4             	 3764400	       134.7 ns/op	   7425607 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap0/Bytes4096-4         	 3458636	       127.8 ns/op	32041.26 MB/s	   7822574 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap0/Bytes4096-4         	 3762200	       132.5 ns/op	30909.46 MB/s	   7546256 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap0/Bytes4096-4         	 3748210	       127.2 ns/op	32205.70 MB/s	   7862721 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap1/Int64-4             	 4850626	        99.18 ns/op	  10082697 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap1/Int64-4             	 4843375	        98.98 ns/op	  10103173 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap1/Int64-4             	 4842018	        99.11 ns/op	  10089939 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap1/Bytes4096-4         	 4839822	        98.95 ns/op	41394.13 MB/s	  10105989 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap1/Bytes4096-4         	 4842289	       102.8 ns/op	39861.70 MB/s	   9731861 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap1/Bytes4096-4         	 4710756	        99.33 ns/op	41236.96 MB/s	  10067618 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap64/Int64-4            	10906921	        43.98 ns/op	  22740072 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap64/Int64-4            	10879946	        44.17 ns/op	  22639316 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap64/Int64-4            	10880588	        43.87 ns/op	  22794006 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap64/Bytes4096-4        	10295868	        46.73 ns/op	87658.76 MB/s	  21401065 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap64/Bytes4096-4        	10338817	        46.53 ns/op	88025.59 MB/s	  21490624 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap64/Bytes4096-4        	10315116	        46.35 ns/op	88369.22 MB/s	  21574516 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap1024/Int64-4          	 5784240	        86.80 ns/op	  11520740 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap1024/Int64-4          	 5409228	        80.36 ns/op	  12444473 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap1024/Int64-4          	 5434989	        78.21 ns/op	  12786508 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap1024/Bytes4096-4      	 5207305	        90.74 ns/op	45138.12 MB/s	  11020049 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap1024/Bytes4096-4      	 5317626	        94.28 ns/op	43446.09 MB/s	  10606955 msg/s	       0 B/op	       0 allocs/op
+BenchmarkNativeChannel/Receive/Cap1024/Bytes4096-4      	 5520265	       102.5 ns/op	39972.87 MB/s	   9759001 msg/s	       0 B/op	       0 allocs/op
+BenchmarkAsyncioQueue/Cap1-4                            	   74898	      6451 ns/op	    155019 msg/s	     768 B/op	      36 allocs/op
+BenchmarkAsyncioQueue/Cap1-4                            	   74864	      6476 ns/op	    154412 msg/s	     768 B/op	      36 allocs/op
+BenchmarkAsyncioQueue/Cap1-4                            	   75126	      6444 ns/op	    155187 msg/s	     768 B/op	      36 allocs/op
+BenchmarkAsyncioQueue/Cap64-4                           	  819188	       581.1 ns/op	   1721004 msg/s	      12 B/op	       0 allocs/op
+BenchmarkAsyncioQueue/Cap64-4                           	  820281	       577.5 ns/op	   1731508 msg/s	      12 B/op	       0 allocs/op
+BenchmarkAsyncioQueue/Cap64-4                           	  813543	       583.2 ns/op	   1714686 msg/s	      12 B/op	       0 allocs/op
+BenchmarkAsyncioQueue/Cap1024-4                         	  958656	       503.3 ns/op	   1986785 msg/s	       0 B/op	       0 allocs/op
+BenchmarkAsyncioQueue/Cap1024-4                         	  957132	       500.4 ns/op	   1998281 msg/s	       0 B/op	       0 allocs/op
+BenchmarkAsyncioQueue/Cap1024-4                         	  945860	       496.2 ns/op	   2015485 msg/s	       0 B/op	       0 allocs/op
+BenchmarkPythonGoCall-4                                 	  586602	       844.0 ns/op	   1184872 msg/s	     288 B/op	      14 allocs/op
+BenchmarkPythonGoCall-4                                 	  589851	       837.7 ns/op	   1193701 msg/s	     288 B/op	      14 allocs/op
+BenchmarkPythonGoCall-4                                 	  592491	       844.7 ns/op	   1183817 msg/s	     288 B/op	      14 allocs/op
+PASS
+ok  	github.com/moriyoshi/pythago/aio	39.832s

@@ -1,0 +1,45 @@
+Mon Nov 16 19:27:40 2026    /tmp/pythago-channel-python-concurrent.prof
+
+         2930407 function calls in 1.542 seconds
+
+   Ordered by: internal time
+   List reduced from 70 to 35 due to restriction <35>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+   100000    0.257    0.000    0.257    0.000 {built-in method channel_start}
+   200000    0.213    0.000    0.725    0.000 goaio.py:44(_channel_wait)
+     3631    0.171    0.000    0.171    0.000 {built-in method poll}
+   100000    0.138    0.000    0.138    0.000 {built-in method channel_cancel}
+   200000    0.077    0.000    0.803    0.000 <pythago>:24(recv_ok)
+   200000    0.070    0.000    0.873    0.000 <pythago>:29(recv)
+     3631    0.055    0.000    1.541    0.000 base_events.py:1984(_run_once)
+   100067    0.052    0.000    0.110    0.000 base_events.py:847(_call_soon)
+   100032    0.046    0.000    0.919    0.000 <pythago>:7(receive)
+   100067    0.046    0.000    0.165    0.000 base_events.py:818(call_soon)
+   100000    0.043    0.000    0.256    0.000 goaio.py:50(complete)
+   100000    0.043    0.000    0.052    0.000 base_events.py:458(create_future)
+   100067    0.037    0.000    0.045    0.000 events.py:41(__init__)
+   100067    0.037    0.000    0.956    0.000 {method 'run' of '_contextvars.Context' objects}
+   100067    0.036    0.000    0.993    0.000 events.py:92(_run)
+     3631    0.036    0.000    0.304    0.000 goaio.py:155(_process_events)
+   100001    0.035    0.000    0.200    0.000 {method 'set_result' of '_asyncio.Future' objects}
+   200000    0.027    0.000    0.027    0.000 {method 'pop' of 'dict' objects}
+   200101    0.018    0.000    0.018    0.000 base_events.py:2082(get_debug)
+   100000    0.016    0.000    0.016    0.000 goaio.py:147(_token)
+   100067    0.014    0.000    0.014    0.000 {method 'popleft' of 'collections.deque' objects}
+   100032    0.013    0.000    0.013    0.000 {method 'done' of '_asyncio.Future' objects}
+   100067    0.013    0.000    0.013    0.000 {method 'append' of 'collections.deque' objects}
+   100000    0.012    0.000    0.012    0.000 {method 'get' of 'dict' objects}
+   100000    0.011    0.000    0.011    0.000 {built-in method _asyncio.get_running_loop}
+   100001    0.011    0.000    0.011    0.000 {built-in method builtins.isinstance}
+   100102    0.010    0.000    0.010    0.000 base_events.py:549(_check_closed)
+     3631    0.001    0.000    0.173    0.000 goaio.py:80(select)
+     7262    0.001    0.000    0.001    0.000 {built-in method builtins.len}
+     3631    0.001    0.000    0.002    0.000 base_events.py:767(time)
+        1    0.001    0.001    1.542    1.542 base_events.py:673(run_forever)
+     3631    0.001    0.000    0.001    0.000 {built-in method time.monotonic}
+       32    0.000    0.000    0.000    0.000 tasks.py:829(_done_callback)
+        1    0.000    0.000    0.000    0.000 tasks.py:787(gather)
+       33    0.000    0.000    0.000    0.000 base_events.py:462(create_task)
+
+

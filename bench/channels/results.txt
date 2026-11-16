@@ -1,0 +1,134 @@
+Baseline before optimizations 1-4. See optimization-results.txt for current results.
+
+Channel bridge performance, 2026-11-16
+
+Environment and method
+Linux arm64, Cortex-X925 fast cores 5-8, GOMAXPROCS=4, Go 1.26.11,
+CGO_ENABLED=0, embedded free-threaded CPython 3.14t. The host also has slower
+Cortex-A725 cores. The initial unrestricted run had substantial scheduling
+variation; pinned measurements are the primary results below.
+
+One operation is one completed channel message, not a request/reply round trip.
+Scalar payload: int64(1<<40 + 7), outside Python's small-integer cache.
+Interpreter initialization, Python source compilation, channel wrapping, and
+loop creation/cleanup are excluded from the timed region. Each bridge test uses
+one Python event loop and one native Go producer or consumer. The 32-worker
+case uses 32 concurrent Python tasks and reports amortized throughput cost,
+not the latency of an individual await. Scalars: five 600 ms samples. Baselines:
+three 400 ms samples. Bytes: three 600 ms samples. All values below are medians.
+Go allocation metrics exclude the Python heap. No production optimization was
+applied as part of this measurement task.
+
+Scalar messages, unbuffered
+Direction                 Pending tasks  us/message   messages/sec  Go B/msg  Go allocs/msg
+Go -> Python              1              18.225       54,870        2145      89
+Python -> Go              1              17.956       55,692        2185      92
+Go -> Python              32              7.378      135,538        1979      69
+Python -> Go              32              7.343      136,184        2018      72
+
+Scalar messages, capacity 64
+Go -> Python              1              17.571       56,912        2145      89
+Python -> Go              1              17.109       58,449        2185      92
+Go -> Python              32              7.294      137,099        1973      69
+Python -> Go              32              7.235      138,217        2012      72
+
+Buffering improves the bridge only a few percent. Concurrent pending operations
+improve throughput about 2.4-2.5x under these pinned conditions. The unrestricted
+20-CPU run showed a larger concurrency benefit, partly from slower sequential
+wakeups on the heterogeneous CPU; see all-cores.txt rather than mixing those
+numbers with the pinned series.
+
+Control measurements
+Native Go unbuffered channel send/receive: 0.131/0.131 us, zero Go allocations.
+Native Go capacity-64 channel send/receive: 0.044/0.044 us, zero allocations.
+Isolated bridge Go core, unbuffered receive/send: 1.118/1.130 us, 8/7 allocations.
+Isolated bridge Go core, capacity-64 receive/send: 0.905/0.924 us.
+Minimal Python -> Go scalar callback with argument/result conversion: 0.844 us,
+288 Go bytes and 14 Go allocations.
+Python-only asyncio.Queue (on GoEventLoop), capacity 1/64/1024:
+6.451/0.581/0.500 us per message. Queue capacity 1 is not an unbuffered rendezvous;
+these are scheduling controls, not identical channel semantics.
+
+Byte payloads, capacity 64, 32 pending tasks
+Direction     Payload    us/message   GB/sec (decimal)  Go B/msg  Go allocs/msg
+Go -> Python   4 KiB       7.510       0.545             2003      69
+Python -> Go   4 KiB       8.339       0.491             6177      74
+Go -> Python  64 KiB      10.217       6.414             2003      70
+Python -> Go  64 KiB      19.584       3.346            67604      74
+Native []byte channel benchmarks transfer a slice header without copying data;
+their reported MB/sec must not be interpreted as memory-copy bandwidth.
+
+Bottlenecks supported by the profiles
+1. Per-message FFI, conversion, and asynchronous scheduling dominate the native
+   channel operation. Every await creates a Future, callback, operation state,
+   two Go synchronization channels and a worker goroutine, even when the native
+   channel is immediately ready. It then returns through the completion queue.
+   A success also calls channel_cancel for cleanup. Buffer capacity does not
+   bypass this lifecycle, which explains the limited buffering benefit.
+
+   For 100,000 receives, Python profiling counted 100,000 channel_start calls,
+   100,000 channel_cancel calls, and 104,717 polls with one task. With 32 tasks,
+   polls fell to 3,631: about 27.5 messages per poll. Poll time includes waiting;
+   these cProfile totals are not CPU percentages, and profiling adds overhead.
+
+2. Object conversion and wrappers create substantial allocation traffic.
+   The scalar Go allocation profile attributed 16.2% of allocated objects to
+   py.own, 15.7% to Object.Int64, 11.4% to py.borrow, and 11.1% to py.sequence.
+   The isolated Go core is only about 1.1 us; it is not the largest component.
+   Go CPU sampling showed substantial callback and scheduler/futex activity.
+
+   Channel dispatch/operations do not use reflection. The shared FFI callback
+   trampoline still uses purego.NewCallback -> callbackWrap -> reflect.Value.Call.
+   reflect.Value.call accounted for 39.8% inclusive sampled CPU, including all its
+   child callbacks; only 1.35% was its own time. Its inclusive allocation total
+   likewise includes downstream conversions. Those totals must not be described
+   as the cost of reflection alone.
+
+3. Python -> Go byte copying and resulting heap/GC work dominate large-payload
+   memory traffic. For 64 KiB messages, Object.Bytes accounted for 96.9% of
+   allocated Go bytes. runtime.memmove accounted for 15.35% of sampled CPU, with
+   additional GC/scanning activity. Each transfer allocates an independent Go
+   byte slice; the Go -> Python direction allocates its byte copy on Python's
+   heap, which is absent from Go's B/op column.
+
+4. Locking was secondary in this one-loop workload. The concurrent mutex profile
+   attributed about 158 ms of aggregate contended delay to completion posting
+   over a 3.7 s run. Handle-registry locking was not prominent. This does not
+   establish scaling behavior for multiple concurrent Python event loops.
+
+Recommended optimization order (not implemented or measured here)
+- Add typed nonblocking send/receive fast paths. Immediately ready operations
+  could return directly without allocating a Future, worker, and completion.
+- Remove the successful-operation cancellation round trip; reserve cancellation
+  work for actual cancellation. Reduce intermediate Object/tuple construction
+  and collapse the recv -> recv_ok -> _channel_wait coroutine layers.
+- For large binary transfers, consider an explicit ownership/lifetime-aware
+  buffer variant. A plain []byte receiver can retain data after receiving, so a
+  safe replacement for the copy needs an ownership contract.
+- A typed FFI trampoline could remove purego's remaining reflection, but the
+  inclusive callback percentages alone do not predict its possible speedup.
+
+Reproduction (run from repository root with the test image, .work/testimage, generated)
+Base environment:
+  taskset -c 5-8 env GOMAXPROCS=4 GOTOOLCHAIN=go1.26.11 CGO_ENABLED=0 GOWORK=$PWD/.work/go.work
+Append the following Go commands to that environment prefix:
+  go test ./aio -run '^$' -bench '^BenchmarkChannelBridge$/(GoToPython|PythonToGo)/Cap(0|64)$/Workers(1|32)$/Int64$' -benchmem -benchtime=600ms -count=5
+  go test ./aio -run '^$' -bench '^(BenchmarkChannelCore|BenchmarkNativeChannel|BenchmarkAsyncioQueue|BenchmarkPythonGoCall)$' -benchmem -benchtime=400ms -count=3
+  go test ./aio -run '^$' -bench '^BenchmarkChannelBridge$/(GoToPython|PythonToGo)/Cap64$/Workers32$/Bytes(4096|65536)$' -benchmem -benchtime=600ms -count=3
+For the unrestricted matrix, omit taskset/GOMAXPROCS and use:
+  go test ./aio -run '^$' -bench '^(BenchmarkChannelBridge|BenchmarkChannelCore|BenchmarkNativeChannel|BenchmarkAsyncioQueue)$' -benchmem -benchtime=300ms -count=3
+For Python profiles, additionally set:
+  PYTHAGO_CHANNEL_PYPROFILE=/tmp/channel.prof
+Select a single bridge benchmark and use -benchtime=100000x -count=1.
+For Go profiles, select a single bridge benchmark and add:
+  -cpuprofile=/tmp/channel.cpu -memprofile=/tmp/channel.mem -o /tmp/aio.test
+For contention, separately use:
+  -blockprofile=/tmp/channel.block -blockprofilerate=1000000 -mutexprofile=/tmp/channel.mutex -o /tmp/aio.test
+Summarize samples:
+  python3 bench/channels/summarize.py bench/channels/pinned-scalars.txt bench/channels/pinned-baselines.txt bench/channels/pinned-bytes.txt
+
+Raw data and text profiles are retained in this directory. Native profile files
+and their matching binaries are in /tmp/pythago-channel-* and /tmp/pythago-aio*.
+The GIL Python variant, other architectures, multi-loop scaling, and per-message
+latency distributions were not measured. CPU profiles may not fully resolve
+internal Python/native execution, so Python profiles supplement them.

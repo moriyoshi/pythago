@@ -1,0 +1,32 @@
+goos: linux
+goarch: arm64
+pkg: github.com/moriyoshi/pythago/aio
+BenchmarkNativeViewAccess/Len/Native-4         	27780188	        17.20 ns/op	       0 B/op	       0 allocs/op
+BenchmarkNativeViewAccess/Len/Native-4         	27834030	        17.21 ns/op	       0 B/op	       0 allocs/op
+BenchmarkNativeViewAccess/Len/Native-4         	27747838	        17.20 ns/op	       0 B/op	       0 allocs/op
+BenchmarkNativeViewAccess/Len/APIAndDo-4       	  995680	       452.6 ns/op	     352 B/op	       7 allocs/op
+BenchmarkNativeViewAccess/Len/APIAndDo-4       	 1000000	       445.1 ns/op	     352 B/op	       7 allocs/op
+BenchmarkNativeViewAccess/Len/APIAndDo-4       	  964731	       444.9 ns/op	     352 B/op	       7 allocs/op
+BenchmarkNativeViewAccess/Rune/Native-4        	28012526	        17.11 ns/op	       0 B/op	       0 allocs/op
+BenchmarkNativeViewAccess/Rune/Native-4        	28023804	        17.12 ns/op	       0 B/op	       0 allocs/op
+BenchmarkNativeViewAccess/Rune/Native-4        	28021632	        17.11 ns/op	       0 B/op	       0 allocs/op
+BenchmarkNativeViewAccess/Rune/APIAndDo-4      	  964105	       453.0 ns/op	     360 B/op	       7 allocs/op
+BenchmarkNativeViewAccess/Rune/APIAndDo-4      	 1000000	       450.9 ns/op	     360 B/op	       7 allocs/op
+BenchmarkNativeViewAccess/Rune/APIAndDo-4      	 1000000	       456.6 ns/op	     360 B/op	       7 allocs/op
+BenchmarkNativeViewAccess/Runes/Native-4       	15770680	        30.23 ns/op	      24 B/op	       1 allocs/op
+BenchmarkNativeViewAccess/Runes/Native-4       	15303675	        29.86 ns/op	      24 B/op	       1 allocs/op
+BenchmarkNativeViewAccess/Runes/Native-4       	15940688	        29.96 ns/op	      24 B/op	       1 allocs/op
+BenchmarkNativeViewAccess/Runes/APIAndDo-4     	  845480	       557.6 ns/op	     488 B/op	      10 allocs/op
+BenchmarkNativeViewAccess/Runes/APIAndDo-4     	  851402	       553.7 ns/op	     488 B/op	      10 allocs/op
+BenchmarkNativeViewAccess/Runes/APIAndDo-4     	  850440	       566.9 ns/op	     488 B/op	      10 allocs/op
+BenchmarkNativeViewAccess/Buffer/Bytes-4       	25410696	        18.90 ns/op	       0 B/op	       0 allocs/op
+BenchmarkNativeViewAccess/Buffer/Bytes-4       	25369930	        18.90 ns/op	       0 B/op	       0 allocs/op
+BenchmarkNativeViewAccess/Buffer/Bytes-4       	25382336	        18.91 ns/op	       0 B/op	       0 allocs/op
+BenchmarkNativeViewAccess/Buffer/Len-4         	26234125	        18.27 ns/op	       0 B/op	       0 allocs/op
+BenchmarkNativeViewAccess/Buffer/Len-4         	26211135	        18.26 ns/op	       0 B/op	       0 allocs/op
+BenchmarkNativeViewAccess/Buffer/Len-4         	26197401	        18.27 ns/op	       0 B/op	       0 allocs/op
+BenchmarkNativeViewAccess/Buffer/ReadOnly-4    	26088868	        18.19 ns/op	       0 B/op	       0 allocs/op
+BenchmarkNativeViewAccess/Buffer/ReadOnly-4    	26413267	        18.15 ns/op	       0 B/op	       0 allocs/op
+BenchmarkNativeViewAccess/Buffer/ReadOnly-4    	26249984	        18.16 ns/op	       0 B/op	       0 allocs/op
+PASS
+ok  	github.com/moriyoshi/pythago/aio	13.202s

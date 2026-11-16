@@ -1,0 +1,33 @@
+File: pythago-aio-bytes.test
+Build ID: 46ac3c67e81ae33e1bf2af2b00706fd235e6e5fc
+Type: cpu
+Time: 2026-11-16 19:28:27 JST
+Duration: 3.96s, Total samples = 6.19s (156.26%)
+Showing nodes accounting for 4.27s, 68.98% of 6.19s total
+Dropped 184 nodes (cum <= 0.03s)
+Showing top 24 nodes out of 201
+      flat  flat%   sum%        cum   cum%
+     0.95s 15.35% 15.35%      0.95s 15.35%  runtime.memmove
+     0.72s 11.63% 26.98%      3.21s 51.86%  runtime.cgocall
+     0.34s  5.49% 32.47%      0.34s  5.49%  runtime.futex
+     0.33s  5.33% 37.80%      0.33s  5.33%  runtime.madvise
+     0.21s  3.39% 41.20%      0.27s  4.36%  runtime.tryDeferToSpanScan
+     0.19s  3.07% 44.26%      0.50s  8.08%  runtime.scanObject
+     0.18s  2.91% 47.17%      0.25s  4.04%  runtime.lock2
+     0.18s  2.91% 50.08%      0.31s  5.01%  runtime.scanblock
+     0.11s  1.78% 51.86%      0.11s  1.78%  runtime.markBits.setMarked (inline)
+     0.10s  1.62% 53.47%      0.10s  1.62%  internal/runtime/atomic.(*Uint32).Add (inline)
+     0.10s  1.62% 55.09%      0.15s  2.42%  runtime.typePointers.next
+     0.09s  1.45% 56.54%      0.10s  1.62%  internal/sync.(*Mutex).Lock (inline)
+     0.09s  1.45% 58.00%      0.09s  1.45%  runtime.step
+     0.08s  1.29% 59.29%      0.08s  1.29%  internal/runtime/atomic.(*Uint32).CompareAndSwap (inline)
+     0.08s  1.29% 60.58%      0.16s  2.58%  runtime.scanObjectsSmall
+     0.08s  1.29% 61.87%      0.10s  1.62%  runtime.unlock2
+     0.07s  1.13% 63.00%      3.21s 51.86%  github.com/ebitengine/purego.SyscallN
+     0.07s  1.13% 64.14%      3.21s 51.86%  github.com/ebitengine/purego.syscall_SyscallN
+     0.07s  1.13% 65.27%      0.07s  1.13%  runtime.findfunc
+     0.05s  0.81% 66.07%      0.05s  0.81%  internal/runtime/atomic.(*Uint64).Add (inline)
+     0.05s  0.81% 66.88%      0.05s  0.81%  runtime.(*gcBitsArena).tryAlloc (inline)
+     0.05s  0.81% 67.69%      0.14s  2.26%  runtime.pcvalue
+     0.04s  0.65% 68.34%      0.04s  0.65%  internal/runtime/atomic.(*Int32).Add
+     0.04s  0.65% 68.98%      0.50s  8.08%  runtime.markroot

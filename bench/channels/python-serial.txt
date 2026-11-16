@@ -1,0 +1,45 @@
+Mon Nov 16 19:26:48 2026    /tmp/pythago-channel-python-serial.prof
+
+         3737855 function calls in 2.435 seconds
+
+   Ordered by: internal time
+   List reduced from 70 to 35 due to restriction <35>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+   104717    0.651    0.000    0.651    0.000 {built-in method poll}
+   100000    0.337    0.000    0.337    0.000 {built-in method channel_start}
+   200000    0.221    0.000    0.831    0.000 goaio.py:44(_channel_wait)
+   104717    0.194    0.000    2.412    0.000 base_events.py:1984(_run_once)
+   100000    0.149    0.000    0.149    0.000 {built-in method channel_cancel}
+   200000    0.080    0.000    0.911    0.000 <pythago>:24(recv_ok)
+   200000    0.075    0.000    0.986    0.000 <pythago>:29(recv)
+   100005    0.058    0.000    0.120    0.000 base_events.py:847(_call_soon)
+   104717    0.052    0.000    0.345    0.000 goaio.py:155(_process_events)
+   100005    0.050    0.000    0.180    0.000 base_events.py:818(call_soon)
+   100001    0.048    0.000    1.034    0.000 <pythago>:7(receive)
+   100000    0.047    0.000    0.279    0.000 goaio.py:50(complete)
+   100000    0.044    0.000    0.054    0.000 base_events.py:458(create_future)
+   100005    0.039    0.000    0.048    0.000 events.py:41(__init__)
+   100001    0.038    0.000    0.219    0.000 {method 'set_result' of '_asyncio.Future' objects}
+   100005    0.038    0.000    1.072    0.000 {method 'run' of '_contextvars.Context' objects}
+   100005    0.037    0.000    1.109    0.000 events.py:92(_run)
+   104717    0.030    0.000    0.682    0.000 goaio.py:80(select)
+   200000    0.027    0.000    0.027    0.000 {method 'pop' of 'dict' objects}
+   104717    0.027    0.000    0.043    0.000 base_events.py:767(time)
+   209434    0.026    0.000    0.026    0.000 {built-in method builtins.len}
+        1    0.023    0.023    2.435    2.435 base_events.py:673(run_forever)
+   200008    0.019    0.000    0.019    0.000 base_events.py:2082(get_debug)
+   100000    0.018    0.000    0.018    0.000 goaio.py:147(_token)
+   104717    0.016    0.000    0.016    0.000 {built-in method time.monotonic}
+   100005    0.014    0.000    0.014    0.000 {method 'popleft' of 'collections.deque' objects}
+   100005    0.014    0.000    0.014    0.000 {method 'append' of 'collections.deque' objects}
+   100000    0.014    0.000    0.014    0.000 {method 'get' of 'dict' objects}
+   100001    0.014    0.000    0.014    0.000 {method 'done' of '_asyncio.Future' objects}
+   100000    0.012    0.000    0.012    0.000 {built-in method _asyncio.get_running_loop}
+   100001    0.012    0.000    0.012    0.000 {built-in method builtins.isinstance}
+   100009    0.010    0.000    0.010    0.000 base_events.py:549(_check_closed)
+        1    0.000    0.000    0.000    0.000 tasks.py:829(_done_callback)
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+        1    0.000    0.000    2.435    2.435 base_events.py:684(run_until_complete)
+
+

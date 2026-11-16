@@ -1,0 +1,180 @@
+# Unit and glibc-floor tiers (PLAN.md §13 M4): CPython 3.13 (gil) and 3.14t (ft), from the LTO
+# and the shared-object builds, on native amd64 and arm64 runners; each runner also
+# cross-builds the other architecture's image and test binaries (PYTHAGO_OTHER_ARCH=build;
+# local runs execute them under qemu-user). The glue job checks glue/prebuilt reproduces (its
+# Linux objects; the darwin ones in darwin-glue, the Windows DLLs where Wine's SDK
+# is: ci/glue.sh). The windows jobs cross-build the Windows test binaries on Linux
+# (ci/windows-build.sh) and run them on Windows: arm64 and amd64 natively, and amd64 (gil) in a
+# Windows Server Core container. The darwin jobs run ci/darwin.sh's tiers natively on
+# macOS runners (ci/darwin-gha.sh, which runs ci/darwin-host.sh from the checkout).
+# GITHUB_TOKEN authenticates pythago-dist's GitHub API lookups (PBS and LLVM releases):
+# anonymous ones share a per-address limit that shared runners exhaust.
+name: ci
+on:
+  push:
+  pull_request:
+# The token only reads public release metadata (api.github.com) and checks out the code.
+permissions:
+  contents: read
+
+jobs:
+  unit:
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [ubuntu-26.04, ubuntu-26.04-arm]
+        variant: [gil, ft]
+        mode: [lto, shared]
+    runs-on: ${{ matrix.runner }}
+    # Both architectures have native runners: the other one's image and binaries are only
+    # built here (cross-building), not run under qemu-user (ci/lib.sh other_arch_mode).
+    env:
+      PYTHAGO_OTHER_ARCH: build
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-go@v7.0.0
+        with:
+          go-version: "1.26.11"
+      - run: sudo apt-get update && sudo apt-get install -y zstd
+      - name: Caches (PBS archives, LLVM, bao, lowered libpython, sysroots)
+        uses: actions/cache@v6.1.0
+        with:
+          path: |
+            ~/.cache/pythago-dist
+            ~/.cache/pythago-ci
+            ~/.cache/pythago/pbs
+          key: pythago-${{ matrix.runner }}-${{ matrix.variant }}-${{ matrix.mode }}-${{ hashFiles('cmd/pythago-dist/**', 'glue/**', 'internal/pbs/**', 'internal/toolchain/**', 'ci/**') }}
+          restore-keys: pythago-${{ matrix.runner }}-${{ matrix.variant }}-${{ matrix.mode }}-
+      - name: Unit tier
+        run: ci/unit.sh ${{ matrix.variant }}
+        env:
+          PYTHAGO_MODE: ${{ matrix.mode }}
+          GITHUB_TOKEN: ${{ github.token }}
+      - name: glibc floor
+        run: ci/floor.sh
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+  glue:
+    runs-on: ubuntu-26.04
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-go@v7.0.0
+        with:
+          go-version: "1.26.11"
+      - run: sudo apt-get update && sudo apt-get install -y zstd
+      - uses: actions/cache@v6.1.0
+        with:
+          path: |
+            ~/.cache/pythago-dist
+            ~/.cache/pythago-ci
+          key: pythago-glue-${{ hashFiles('cmd/pythago-dist/**', 'glue/**', 'internal/toolchain/**', 'ci/**') }}
+          restore-keys: pythago-glue-
+      - name: Prebuilt glue reproduces
+        run: ci/glue.sh
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+  windows-build:
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: [arm64, amd64]
+        variant: [gil, ft]
+    runs-on: ubuntu-26.04
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-go@v7.0.0
+        with:
+          go-version: "1.26.11"
+      - uses: actions/cache@v6.1.0
+        with:
+          path: |
+            ~/.cache/pythago-dist
+            ~/.cache/pythago-ci
+          key: pythago-windows-${{ matrix.arch }}-${{ matrix.variant }}-${{ hashFiles('cmd/pythago-dist/**', 'glue/**', 'internal/pbs/**', 'internal/toolchain/**', 'ci/**') }}
+          restore-keys: pythago-windows-${{ matrix.arch }}-${{ matrix.variant }}-
+      - name: Windows test binaries
+        run: ci/windows-build.sh ${{ matrix.variant }} ${{ matrix.arch }} windows-out
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - uses: actions/upload-artifact@v7.0.2
+        with:
+          name: windows-${{ matrix.arch }}-${{ matrix.variant }}
+          path: windows-out/run
+          retention-days: 3
+  windows:
+    needs: windows-build
+    strategy:
+      fail-fast: false
+      matrix:
+        variant: [gil, ft]
+        target:
+          - {name: arm64, runner: windows-11-arm, arch: arm64}
+          - {name: amd64, runner: windows-2025, arch: amd64}
+          - {name: amd64 Server Core, runner: windows-2025, arch: amd64, servercore: true}
+        # Server Core is a smoke check that the binaries run in the minimal container image:
+        # the GIL variant only (the same binaries as windows-2025's own jobs, on the same host).
+        exclude:
+          - variant: ft
+            target: {name: amd64 Server Core, runner: windows-2025, arch: amd64, servercore: true}
+    name: windows (${{ matrix.target.name }}, ${{ matrix.variant }})
+    runs-on: ${{ matrix.target.runner }}
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/download-artifact@v8.0.2
+        with:
+          name: windows-${{ matrix.target.arch }}-${{ matrix.variant }}
+          path: windows-run
+      - name: Tests
+        if: ${{ !matrix.target.servercore }}
+        shell: pwsh
+        run: ./ci/windows-run.ps1 -Run windows-run
+      - name: Tests in Windows Server Core
+        if: ${{ matrix.target.servercore }}
+        shell: pwsh
+        # Process isolation: the image must match the host's build (windows-2025: ltsc2025).
+        run: >
+          docker run --rm --isolation=process -v "${{ github.workspace }}:C:\w" -w C:\w
+          mcr.microsoft.com/windows/servercore:ltsc2025
+          powershell -NoProfile -ExecutionPolicy Bypass -File ci\windows-run.ps1 -Run windows-run
+  darwin:
+    strategy:
+      fail-fast: false
+      matrix:
+        variant: [gil, ft]
+        target:
+          - {arch: arm64, runner: macos-26}
+          - {arch: amd64, runner: macos-26-intel}
+    name: darwin (${{ matrix.target.arch }}, ${{ matrix.variant }})
+    runs-on: ${{ matrix.target.runner }}
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-go@v7.0.0
+        with:
+          go-version: "1.26.11"
+      - name: Caches (PBS archives, lowered libpython)
+        uses: actions/cache@v6.1.0
+        with:
+          path: ~/Library/Caches/pythago-dist
+          key: pythago-darwin-${{ matrix.target.arch }}-${{ matrix.variant }}-${{ hashFiles('cmd/pythago-dist/**', 'glue/**', 'internal/pbs/**', 'internal/toolchain/**', 'ci/**') }}
+          restore-keys: pythago-darwin-${{ matrix.target.arch }}-${{ matrix.variant }}-
+      - name: darwin tier
+        run: bash ci/darwin-gha.sh ${{ matrix.variant }} ${{ matrix.target.arch }}
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+  darwin-glue:
+    # The darwin glue objects are built with the fetched LLVM, which exists for arm64 macOS only.
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-go@v7.0.0
+        with:
+          go-version: "1.26.11"
+      - uses: actions/cache@v6.1.0
+        with:
+          path: ~/Library/Caches/pythago-dist
+          key: pythago-darwin-glue-${{ hashFiles('cmd/pythago-dist/**', 'glue/**', 'internal/toolchain/**', 'ci/**') }}
+          restore-keys: pythago-darwin-glue-
+      - name: Prebuilt darwin glue reproduces
+        run: bash ci/darwin-gha.sh glue arm64
+        env:
+          GITHUB_TOKEN: ${{ github.token }}

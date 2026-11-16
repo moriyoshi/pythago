@@ -1,0 +1,28 @@
+File: pythago-aio-bytes.test
+Build ID: 46ac3c67e81ae33e1bf2af2b00706fd235e6e5fc
+Type: alloc_space
+Time: 2026-11-16 19:28:31 JST
+Showing nodes accounting for 11573.43MB, 98.09% of 11798.22MB total
+Dropped 69 nodes (cum <= 58.99MB)
+Showing top 20 nodes out of 28
+      flat  flat%   sum%        cum   cum%
+11434.39MB 96.92% 96.92% 11434.39MB 96.92%  github.com/moriyoshi/pythago/py.(*Object).Bytes
+   52.50MB  0.45% 97.36% 11518.90MB 97.63%  github.com/moriyoshi/pythago/aio.module.channelModule.func31
+   34.50MB  0.29% 97.65% 11736.41MB 99.48%  github.com/ebitengine/purego.callbackWrap
+      33MB  0.28% 97.93%       88MB  0.75%  github.com/moriyoshi/pythago/aio.module.func8
+    7.50MB 0.064% 98.00% 11692.40MB 99.10%  github.com/moriyoshi/pythago/py.dispatch
+       7MB 0.059% 98.06% 11701.90MB 99.18%  reflect.Value.call
+       4MB 0.034% 98.09% 11438.39MB 96.95%  github.com/moriyoshi/pythago/py.(*Object).Go
+    0.53MB 0.0045% 98.09% 11736.94MB 99.48%  github.com/moriyoshi/pythago/aio_test.BenchmarkChannelBridge.func2
+         0     0% 98.09% 11736.41MB 99.48%  github.com/ebitengine/purego.SyscallN
+         0     0% 98.09% 11736.41MB 99.48%  github.com/ebitengine/purego.syscall_SyscallN
+         0     0% 98.09%       88MB  0.75%  github.com/moriyoshi/pythago/aio.module.module.func1.func37
+         0     0% 98.09% 11736.41MB 99.48%  github.com/moriyoshi/pythago/aio_test.benchmarkChannelBridge[go.shape.[]uint8]
+         0     0% 98.09% 11736.41MB 99.48%  github.com/moriyoshi/pythago/aio_test.benchmarkChannelPython
+         0     0% 98.09% 11736.41MB 99.48%  github.com/moriyoshi/pythago/aio_test.benchmarkChannelPython.func1
+         0     0% 98.09% 11736.41MB 99.48%  github.com/moriyoshi/pythago/py.(*Object).Call (inline)
+         0     0% 98.09% 11736.41MB 99.48%  github.com/moriyoshi/pythago/py.(*Object).CallKw
+         0     0% 98.09% 11736.41MB 99.48%  github.com/moriyoshi/pythago/py.Do
+         0     0% 98.09%    90.50MB  0.77%  github.com/moriyoshi/pythago/py.From
+         0     0% 98.09% 11736.41MB 99.48%  github.com/moriyoshi/pythago/py.call
+         0     0% 98.09% 11736.41MB 99.48%  github.com/moriyoshi/pythago/py.enter

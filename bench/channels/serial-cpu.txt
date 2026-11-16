@@ -1,0 +1,39 @@
+File: pythago-aio.test
+Build ID: 60d75b9877e82350f4c073975b7ff14c6d780603
+Type: cpu
+Time: 2026-11-16 19:24:44 JST
+Duration: 6.25s, Total samples = 6.68s (106.87%)
+Showing nodes accounting for 5.50s, 82.34% of 6.68s total
+Dropped 144 nodes (cum <= 0.03s)
+Showing top 30 nodes out of 147
+      flat  flat%   sum%        cum   cum%
+     1.46s 21.86% 21.86%      3.84s 57.49%  runtime.cgocall
+     1.38s 20.66% 42.51%      1.38s 20.66%  runtime.futex
+     0.26s  3.89% 46.41%      0.27s  4.04%  runtime.lock2
+     0.24s  3.59% 50.00%      0.28s  4.19%  runtime.unlock2
+     0.22s  3.29% 53.29%      3.84s 57.49%  github.com/ebitengine/purego.SyscallN
+     0.17s  2.54% 55.84%      0.17s  2.54%  runtime.usleep
+     0.15s  2.25% 58.08%      0.15s  2.25%  internal/sync.(*Mutex).Lock (inline)
+     0.14s  2.10% 60.18%      0.14s  2.10%  internal/runtime/atomic.(*Uint32).CompareAndSwap (inline)
+     0.13s  1.95% 62.13%      0.13s  1.95%  runtime.nextFreeFast (inline)
+     0.12s  1.80% 63.92%      0.72s 10.78%  runtime.mallocgc
+     0.11s  1.65% 65.57%      3.84s 57.49%  github.com/ebitengine/purego.syscall_SyscallN
+     0.10s  1.50% 67.07%      0.81s 12.13%  runtime.notesleep
+     0.09s  1.35% 68.41%      2.66s 39.82%  reflect.Value.call
+     0.09s  1.35% 69.76%      0.09s  1.35%  runtime.(*guintptr).cas (inline)
+     0.08s  1.20% 70.96%      0.26s  3.89%  runtime.mallocgcSmallNoscan
+     0.07s  1.05% 72.01%      0.74s 11.08%  runtime.notewakeup
+     0.07s  1.05% 73.05%      0.14s  2.10%  sync.(*Pool).Get
+     0.06s   0.9% 73.95%      0.06s   0.9%  internal/runtime/atomic.(*Uint64).Add (inline)
+     0.06s   0.9% 74.85%      0.26s  3.89%  runtime.stealWork
+     0.05s  0.75% 75.60%      0.05s  0.75%  internal/runtime/atomic.(*Uint32).Add (inline)
+     0.05s  0.75% 76.35%      0.05s  0.75%  runtime.acquirem (inline)
+     0.05s  0.75% 77.10%      0.05s  0.75%  runtime.gopark
+     0.05s  0.75% 77.84%      0.30s  4.49%  runtime.mallocgcSmallScanNoHeader
+     0.05s  0.75% 78.59%      0.07s  1.05%  sync.(*Pool).Put
+     0.05s  0.75% 79.34%      0.08s  1.20%  sync.(*Pool).pin
+     0.04s   0.6% 79.94%      0.05s  0.75%  runtime.(*mspan).writeHeapBitsSmall
+     0.04s   0.6% 80.54%      0.04s   0.6%  runtime.getcallerfp
+     0.04s   0.6% 81.14%      0.04s   0.6%  runtime.memclrNoHeapPointers
+     0.04s   0.6% 81.74%      0.04s   0.6%  runtime.mutexSampleContention (inline)
+     0.04s   0.6% 82.34%      0.04s   0.6%  runtime.releasem (inline)

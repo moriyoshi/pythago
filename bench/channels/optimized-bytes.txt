@@ -1,0 +1,41 @@
+goos: linux
+goarch: arm64
+pkg: github.com/moriyoshi/pythago/aio
+BenchmarkChannelBridge/GoToPython/Cap64/Workers32/Bytes4096-4         	  367929	      1992 ns/op	2056.02 MB/s	    501958 msg/s	     524 B/op	      22 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap64/Workers32/Bytes4096-4         	  358268	      1965 ns/op	2084.43 MB/s	    508894 msg/s	     524 B/op	      22 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap64/Workers32/Bytes4096-4         	  352748	      1981 ns/op	2067.82 MB/s	    504840 msg/s	     526 B/op	      22 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap64/Workers32/Bytes65536-4        	  249854	      2963 ns/op	22116.95 MB/s	    337478 msg/s	     521 B/op	      22 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap64/Workers32/Bytes65536-4        	  233362	      2902 ns/op	22584.19 MB/s	    344607 msg/s	     520 B/op	      22 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap64/Workers32/Bytes65536-4        	  214482	      2865 ns/op	22877.18 MB/s	    349078 msg/s	     522 B/op	      22 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap64/Workers32/Bytes1048576-4      	   45561	     16571 ns/op	63278.45 MB/s	     60347 msg/s	     512 B/op	      22 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap64/Workers32/Bytes1048576-4      	   46299	     15604 ns/op	67200.13 MB/s	     64087 msg/s	     512 B/op	      22 allocs/op
+BenchmarkChannelBridge/GoToPython/Cap64/Workers32/Bytes1048576-4      	   40842	     16237 ns/op	64577.66 MB/s	     61586 msg/s	     512 B/op	      22 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap64/Workers32/Bytes4096-4         	  198048	      3192 ns/op	1283.15 MB/s	    313268 msg/s	    4735 B/op	      29 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap64/Workers32/Bytes4096-4         	  225676	      3176 ns/op	1289.67 MB/s	    314861 msg/s	    4735 B/op	      29 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap64/Workers32/Bytes4096-4         	  209253	      3246 ns/op	1261.96 MB/s	    308095 msg/s	    4735 B/op	      29 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap64/Workers32/Bytes65536-4        	   63330	     12781 ns/op	5127.62 MB/s	     78241 msg/s	   66180 B/op	      29 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap64/Workers32/Bytes65536-4        	   53148	     13664 ns/op	4796.20 MB/s	     73184 msg/s	   66179 B/op	      29 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap64/Workers32/Bytes65536-4        	   54262	     13458 ns/op	4869.78 MB/s	     74307 msg/s	   66180 B/op	      29 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap64/Workers32/Bytes1048576-4      	    5535	    121352 ns/op	8640.77 MB/s	      8240 msg/s	 1049381 B/op	      29 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap64/Workers32/Bytes1048576-4      	    5994	    119094 ns/op	8804.63 MB/s	      8397 msg/s	 1049380 B/op	      29 allocs/op
+BenchmarkChannelBridge/PythonToGo/Cap64/Workers32/Bytes1048576-4      	    6039	    114517 ns/op	9156.54 MB/s	      8732 msg/s	 1049381 B/op	      29 allocs/op
+BenchmarkChannelBuffer/GoToPython/Cap64/Workers32/Bytes4096-4         	  143766	      4933 ns/op	 830.37 MB/s	    202727 msg/s	    1637 B/op	      56 allocs/op
+BenchmarkChannelBuffer/GoToPython/Cap64/Workers32/Bytes4096-4         	  144180	      4916 ns/op	 833.12 MB/s	    203399 msg/s	    1636 B/op	      56 allocs/op
+BenchmarkChannelBuffer/GoToPython/Cap64/Workers32/Bytes4096-4         	  146212	      4903 ns/op	 835.47 MB/s	    203972 msg/s	    1635 B/op	      56 allocs/op
+BenchmarkChannelBuffer/GoToPython/Cap64/Workers32/Bytes65536-4        	  135415	      4944 ns/op	13255.25 MB/s	    202259 msg/s	    1636 B/op	      56 allocs/op
+BenchmarkChannelBuffer/GoToPython/Cap64/Workers32/Bytes65536-4        	  134112	      5011 ns/op	13077.93 MB/s	    199553 msg/s	    1637 B/op	      56 allocs/op
+BenchmarkChannelBuffer/GoToPython/Cap64/Workers32/Bytes65536-4        	  134647	      4958 ns/op	13218.65 MB/s	    201701 msg/s	    1637 B/op	      56 allocs/op
+BenchmarkChannelBuffer/GoToPython/Cap64/Workers32/Bytes1048576-4      	  115966	      5692 ns/op	184215.75 MB/s	    175682 msg/s	    1637 B/op	      56 allocs/op
+BenchmarkChannelBuffer/GoToPython/Cap64/Workers32/Bytes1048576-4      	  116234	      5596 ns/op	187368.16 MB/s	    178688 msg/s	    1637 B/op	      56 allocs/op
+BenchmarkChannelBuffer/GoToPython/Cap64/Workers32/Bytes1048576-4      	  116364	      5665 ns/op	185085.43 MB/s	    176511 msg/s	    1637 B/op	      56 allocs/op
+BenchmarkChannelBuffer/PythonToGo/Cap64/Workers32/Bytes4096-4         	  205362	      3524 ns/op	1162.37 MB/s	    283782 msg/s	     930 B/op	      41 allocs/op
+BenchmarkChannelBuffer/PythonToGo/Cap64/Workers32/Bytes4096-4         	  204284	      3481 ns/op	1176.59 MB/s	    287254 msg/s	     931 B/op	      41 allocs/op
+BenchmarkChannelBuffer/PythonToGo/Cap64/Workers32/Bytes4096-4         	  204314	      3495 ns/op	1171.83 MB/s	    286092 msg/s	     930 B/op	      41 allocs/op
+BenchmarkChannelBuffer/PythonToGo/Cap64/Workers32/Bytes65536-4        	  203872	      3479 ns/op	18839.51 MB/s	    287468 msg/s	     930 B/op	      41 allocs/op
+BenchmarkChannelBuffer/PythonToGo/Cap64/Workers32/Bytes65536-4        	  202620	      3523 ns/op	18599.84 MB/s	    283811 msg/s	     929 B/op	      41 allocs/op
+BenchmarkChannelBuffer/PythonToGo/Cap64/Workers32/Bytes65536-4        	  203378	      3516 ns/op	18639.05 MB/s	    284409 msg/s	     930 B/op	      41 allocs/op
+BenchmarkChannelBuffer/PythonToGo/Cap64/Workers32/Bytes1048576-4      	  198746	      3636 ns/op	288356.27 MB/s	    274998 msg/s	     931 B/op	      41 allocs/op
+BenchmarkChannelBuffer/PythonToGo/Cap64/Workers32/Bytes1048576-4      	  190712	      3621 ns/op	289609.57 MB/s	    276193 msg/s	     929 B/op	      41 allocs/op
+BenchmarkChannelBuffer/PythonToGo/Cap64/Workers32/Bytes1048576-4      	  201688	      3606 ns/op	290775.08 MB/s	    277305 msg/s	     928 B/op	      41 allocs/op
+PASS
+ok  	github.com/moriyoshi/pythago/aio	30.409s

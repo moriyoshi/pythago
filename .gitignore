@@ -1,0 +1,5 @@
+# Generated native images (pythago-dist): large, rebuilt locally, never distributed.
+/.work/
+__pycache__
+*.pyo
+*.pyc

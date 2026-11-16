@@ -1,0 +1,69 @@
+Channel optimizations 1-4, 2026-11-16
+
+Implemented changes:
+- Typed nonblocking native selects complete ready operations synchronously.
+- Future, worker, and operation handles are allocated only when waiting.
+- Workers retire their own handles. Successful Python awaits perform no cancellation callback or redundant cleanup.
+- Send and receive callbacks use fewer metadata arguments. Ready operations do not parse loop/token IDs or look up the loop.
+- Each Python channel method has one coroutine frame; common scalar/byte results avoid intermediate owned Objects.
+- chan *aio.Buffer transfers explicit buffer leases without payload copies; ordinary chan []byte retains copying semantics.
+- Repeated Go exports reclaim previously released pins while Python remains attached, bounding streaming pin retention.
+- The shared FFI trampoline and purego dependency were not changed (step 5 is separate).
+
+Method: Linux arm64, Cortex-X925 cores 5-8, GOMAXPROCS=4, Go 1.26.11,
+CGO_ENABLED=0, free-threaded CPython 3.14t. Same machine and pinned CPU set as
+baseline. Scalars: five 600 ms samples; byte variants: three 600 ms samples.
+All figures are medians per completed message. 32 workers measure throughput
+cost, not individual-await latency. Go allocation metrics exclude Python heap.
+
+Scalar comparison:
+direction  capacity  workers  before_us  after_us  speedup  before_Go_allocs  after_Go_allocs
+GoToPython          0        1     18.225    10.308    1.77x               89              47
+GoToPython          0       32      7.378     5.394    1.37x               69              49
+GoToPython         64        1     17.571     1.875    9.37x               89              22
+GoToPython         64       32      7.294     1.900    3.84x               69              22
+PythonToGo          0        1     17.956    10.438    1.72x               92              52
+PythonToGo          0       32      7.343     5.601    1.31x               72              54
+PythonToGo         64        1     17.109     2.080    8.23x               92              27
+PythonToGo         64       32      7.235     2.070    3.50x               72              27
+
+Byte comparison, capacity 64, 32 workers:
+direction  payload  old_copy_us  new_copy_us  lease_us  new_copy_Go_B  lease_Go_B
+GoToPython      4096        7.510        1.981     4.916            524        1636
+GoToPython     65536       10.217        2.902     4.958            521        1637
+GoToPython   1048576          n/a       16.237     5.665            512        1637
+PythonToGo      4096        8.339        3.192     3.495           4735         930
+PythonToGo     65536       19.584       13.458     3.516          66180         930
+PythonToGo   1048576          n/a      119.094     3.621        1049381         929
+
+The ownership-aware variant has fixed export/memoryview overhead. For Go ->
+Python at 64 KiB it is slower than the optimized copy path (about 5 us vs 2.9 us),
+but at 1 MiB it is faster. For Python -> Go, 64 KiB leases take about 3.5 us
+instead of 13.5 us for the optimized copy path, and eliminate roughly 98.6% of
+Go allocation bytes compared with the original implementation. At 1 MiB the
+lease still allocates about 1 KiB of Go metadata instead of a 1 MiB slice.
+Payloads are reused and consumers do not scan every byte: zero-copy MB/s is
+equivalent message volume, not measured memory bandwidth.
+
+Ownership and cancellation:
+- Go senders relinquish use of aio.NewBuffer(data, readOnly) and its mutable data after sending.
+- Python sends borrow any C-contiguous buffer; the sender must not modify shared mutable memory until receiver release/acknowledgement.
+- Go receivers Close leases before Python finalization; Python receivers release or collect their memoryviews.
+- Cancellation joins unfinished workers. A transfer racing cancellation can already have committed, as before.
+- Cancelled unsent leases and queued/dropped receive leases are released, including loop shutdown.
+
+Validation:
+- aio, py, and asgi tests run three times with CPython 3.14t and three times with CPython 3.13 GIL.
+- Targeted channel tests repeatedly cover ready/no-Future behavior, successful/no-cancel behavior, cancellation races, automatic worker retirement, close/drain, shutdown, nil values, and failed Future creation.
+- Buffer tests cover zero-copy aliasing, read-only exports, typed-view flattening, GC lifetime, explicit release, resize protection, cancellation and shutdown cleanup, and bounded pin retention.
+- go vet ./aio ./asgi and gofmt checks pass.
+- The race detector could not link the translated native image with CGO enabled; forcing internal linking also failed in purego dynamic relocations. No race-detector pass is claimed.
+
+Reproduction:
+  taskset -c 5-8 env GOMAXPROCS=4 GOTOOLCHAIN=go1.26.11 CGO_ENABLED=0 go test ./aio -run "^$" -bench "^BenchmarkChannelBridge$/(GoToPython|PythonToGo)/Cap(0|64)$/Workers(1|32)$/Int64$" -benchmem -benchtime=600ms -count=5
+  taskset -c 5-8 env GOMAXPROCS=4 GOTOOLCHAIN=go1.26.11 CGO_ENABLED=0 go test ./aio -run "^$" -bench "^BenchmarkChannel(Bridge|Buffer)$/(GoToPython|PythonToGo)/Cap64$/Workers32$/Bytes(4096|65536|1048576)$" -benchmem -benchtime=600ms -count=3
+  python3 bench/channels/summarize.py bench/channels/optimized-scalars.txt bench/channels/optimized-bytes.txt
+  env GOTOOLCHAIN=go1.26.11 CGO_ENABLED=0 go test ./aio ./py ./asgi -count=3
+
+Raw samples: optimized-scalars.txt and optimized-bytes.txt. Medians and ranges:
+optimized-summary.tsv. The original baseline and profile evidence remain in results.txt.

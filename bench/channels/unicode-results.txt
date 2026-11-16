@@ -1,0 +1,53 @@
+Owned Python Unicode channels and rune access, 2026-11-16
+
+Historical C API implementation; native-views-results.txt records the subsequent
+direct-layout implementation and access benchmarks without metadata caches.
+
+API
+- chan *aio.String retains PyUnicode directly. Python-to-Go-to-Python forwarding
+  preserves object identity, subclasses, embedded NULs, and unpaired surrogates.
+- aio.NewString(text) creates a Unicode object once, after interpreter startup.
+- Clone retains another owned reference to the same object. Successful sends
+  transfer ownership. Go receivers Close or forward the lease before Finalize.
+- GoString explicitly materializes an independent Go UTF-8 copy; it can fail for
+  Python strings with unpaired surrogates without consuming the Unicode lease.
+- Len reports the native code-point count, not bytes or grapheme clusters.
+- Rune(index) reads a zero-based native code point; negative/out-of-range indexes
+  return an error. Surrogates are returned as their numeric rune values.
+- Runes makes one bulk UCS-4 copy into []rune without intermediate UTF-8 and
+  without per-code-point calls across the language boundary.
+- Slice(start,end) creates a separately owned native Unicode substring, using
+  Go-style half-open bounds. It remains valid after the source lease closes.
+- All methods can run on ordinary goroutines. Mutexes are acquired after entering
+  Python for access methods, avoiding a GIL/mutex lock-order inversion.
+
+Native Unicode access uses PyUnicode_GetLength, PyUnicode_ReadChar,
+PyUnicode_AsUCS4 and PyUnicode_Substring; it never reads CPython object layouts
+or calls str subclass __len__/__getitem__ overrides.
+Reference: https://docs.python.org/3.13/c-api/unicode.html
+
+Performance
+Linux arm64, Cortex-X925 cores 5-8, GOMAXPROCS=4, Go 1.26.11, CGO_ENABLED=0,
+free-threaded CPython 3.14t. Three 400 ms samples; medians. Python-to-Go only,
+capacity 64, 32 pending tasks, reusable ASCII source strings. The reference
+consumer releases its lease without inspecting the text or making a Go copy.
+
+UTF-8 bytes  ordinary chan string us/msg  chan *aio.String us/msg  Go B/msg copy/ref
+64          2.112                         2.508                    659 / 657
+65536      13.280                         2.602                  66140 / 657
+1048576   115.885                         2.662                1049357 / 659
+
+The owned-reference variant has fixed reference-management overhead, so it is
+not faster for every small payload. Its Go allocation bytes are independent of
+text size. Any later GoString()/Runes() materialization adds its own copy cost.
+Go allocation metrics exclude the Python heap. Equivalent payload MB/s does
+not measure memory-copy bandwidth for the reference path.
+
+Raw measurements: unicode-string.txt. Medians/ranges: unicode-summary.tsv.
+Reproduce:
+  taskset -c 5-8 env GOMAXPROCS=4 GOTOOLCHAIN=go1.26.11 CGO_ENABLED=0 go test ./aio -run '^$' -bench '^BenchmarkChannelString$' -benchmem -benchtime=400ms -count=3
+
+Tests cover all native character widths, non-BMP text, combining marks, NUL,
+surrogates, subclass overrides, identity preservation, clone/close/transfer,
+invalid types/UTF-8, bounds errors, independent rune copies and substring lifetime,
+cancellation, and queued/late/shutdown disposal.

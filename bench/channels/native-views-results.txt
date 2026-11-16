@@ -1,0 +1,59 @@
+Native Unicode and buffer reads without metadata caches, 2026-11-17
+
+Compiler-derived layouts: CPython 3.13.18 (GIL) and 3.14.10 (free-threaded),
+Linux arm64/amd64. Definitions contain immutable ABI offsets and bit masks;
+per-object state is only the owned Unicode reference or active Py_buffer export.
+Unicode length, kind flags, and data pointers are loaded on each access.
+Buffer accessors load the corresponding native export fields each time.
+
+Pinned access microbenchmarks: Linux arm64, Cortex-X925 cores 5-8,
+GOMAXPROCS=4, Go 1.26.11, CGO_ENABLED=0, three 400 ms samples, medians.
+Text is Aé🤖日本語 (six code points). Buffer is four bytes from a Python exporter.
+APIAndDo controls use the current shared FFI and reproduce per-access Python
+entry, a Go mutex, and the Unicode C API. They are simultaneous controls,
+not comparisons against a historical binary. These timings measure access,
+not complete channel message throughput.
+
+operation                 FT ns/access  GIL ns/access   B/access  allocs/access
+Len/Native                      17.26          17.20          0              0
+Len/APIAndDo                   412.80         445.10        352              7
+Rune/Native                     17.13          17.11          0              0
+Rune/APIAndDo                  423.50         453.00        360              7
+Runes/Native                    30.31          29.96         24              1
+Runes/APIAndDo                 530.30         557.60        488             10
+Buffer/Bytes                    18.89          18.90          0              0
+Buffer/Len                      18.22          18.27          0              0
+Buffer/ReadOnly                 18.11          18.16          0              0
+
+Native read speedup against APIAndDo control:
+  Len: FT 23.9x; GIL 25.9x
+  Rune: FT 24.7x; GIL 26.5x
+  Runes: FT 17.5x; GIL 18.6x
+
+Remaining costs: String/Buffer mutex and bounds/lifetime checks; Runes allocates
+one independent Go rune slice. Constructing, cloning, slicing, converting to
+UTF-8, and releasing Python objects still require Python entry. Buffer export
+and release retain their C API calls. The shared FFI currently allocates an
+argument slice plus call frame per boundary, measured as four allocations for
+GetBuffer+Release; reusing Buffer adds no allocations above that boundary cost.
+
+Validation:
+- All four generated definitions reproduced byte-for-byte from matching headers.
+- arm64 FT: py/aio/asgi full tests passed with count=3 (and final count=1).
+- arm64 GIL: aio/asgi passed with count=3; full py rerun with count=1 passed.
+  An earlier count=3 py run had one TestGoroutines NameError for bump, with
+  counter 9995 instead of 10000. No native-view test failed.
+- Native no-admission, live buffer metadata, and allocation checks passed on
+  both variants, including amd64 under qemu-user. Native reads succeed while
+  every Python admission slot is occupied.
+- amd64 FT RuneAccess passed. GIL RuneAccess assertions passed, then Finalize
+  crashed in the current C thunk. Broader amd64 FT channel tests failed with
+  C API returned NULL without exception. These are not claimed as passing.
+  The amd64 thunk adjusts the heap-allocated cframe pointer by a goroutine
+  stack relocation delta before storing the result; its stack-based assumption
+  is inconsistent with call() allocating the frame on the heap. FFI files were
+  left unchanged.
+- go vet aio/asgi/internal/layout/internal/tools/nativelayout passed.
+
+Raw results: native-views-ft.txt, native-views-gil.txt.
+Regeneration and lifetime rules: ../../internal/layout/README.txt.

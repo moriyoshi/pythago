@@ -1,0 +1,23 @@
+goos: linux
+goarch: arm64
+pkg: github.com/moriyoshi/pythago/aio
+BenchmarkChannelString/Copy/Bytes64-4         	  202939	      2109 ns/op	  30.34 MB/s	    474056 msg/s	     659 B/op	      28 allocs/op
+BenchmarkChannelString/Copy/Bytes64-4         	  199016	      2112 ns/op	  30.30 MB/s	    473381 msg/s	     659 B/op	      28 allocs/op
+BenchmarkChannelString/Copy/Bytes64-4         	  221227	      2132 ns/op	  30.02 MB/s	    469056 msg/s	     661 B/op	      28 allocs/op
+BenchmarkChannelString/UnicodeRef/Bytes64-4   	  186937	      2501 ns/op	  25.59 MB/s	    399804 msg/s	     657 B/op	      31 allocs/op
+BenchmarkChannelString/UnicodeRef/Bytes64-4   	  192464	      2508 ns/op	  25.51 MB/s	    398664 msg/s	     656 B/op	      31 allocs/op
+BenchmarkChannelString/UnicodeRef/Bytes64-4   	  180916	      2589 ns/op	  24.72 MB/s	    386287 msg/s	     658 B/op	      31 allocs/op
+BenchmarkChannelString/Copy/Bytes65536-4      	   43052	     12278 ns/op	5337.61 MB/s	     81445 msg/s	   66140 B/op	      28 allocs/op
+BenchmarkChannelString/Copy/Bytes65536-4      	   35564	     13631 ns/op	4808.03 MB/s	     73365 msg/s	   66140 B/op	      28 allocs/op
+BenchmarkChannelString/Copy/Bytes65536-4      	   34365	     13280 ns/op	4934.77 MB/s	     75299 msg/s	   66141 B/op	      28 allocs/op
+BenchmarkChannelString/UnicodeRef/Bytes65536-4         	  179986	      2530 ns/op	25907.67 MB/s	    395320 msg/s	     656 B/op	      31 allocs/op
+BenchmarkChannelString/UnicodeRef/Bytes65536-4         	  187704	      2602 ns/op	25190.04 MB/s	    384370 msg/s	     657 B/op	      31 allocs/op
+BenchmarkChannelString/UnicodeRef/Bytes65536-4         	  186889	      2610 ns/op	25110.41 MB/s	    383154 msg/s	     657 B/op	      31 allocs/op
+BenchmarkChannelString/Copy/Bytes1048576-4             	    3910	    118806 ns/op	8825.95 MB/s	      8417 msg/s	 1049360 B/op	      28 allocs/op
+BenchmarkChannelString/Copy/Bytes1048576-4             	    3780	    115647 ns/op	9067.01 MB/s	      8647 msg/s	 1049357 B/op	      28 allocs/op
+BenchmarkChannelString/Copy/Bytes1048576-4             	    3796	    115885 ns/op	9048.40 MB/s	      8629 msg/s	 1049352 B/op	      28 allocs/op
+BenchmarkChannelString/UnicodeRef/Bytes1048576-4       	  183058	      2643 ns/op	396740.63 MB/s	    378361 msg/s	     659 B/op	      31 allocs/op
+BenchmarkChannelString/UnicodeRef/Bytes1048576-4       	  180136	      2692 ns/op	389522.31 MB/s	    371477 msg/s	     661 B/op	      31 allocs/op
+BenchmarkChannelString/UnicodeRef/Bytes1048576-4       	  181593	      2662 ns/op	393861.84 MB/s	    375616 msg/s	     659 B/op	      31 allocs/op
+PASS
+ok  	github.com/moriyoshi/pythago/aio	9.717s

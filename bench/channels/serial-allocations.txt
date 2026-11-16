@@ -1,0 +1,32 @@
+File: pythago-aio.test
+Build ID: 60d75b9877e82350f4c073975b7ff14c6d780603
+Type: alloc_objects
+Time: 2026-11-16 19:24:51 JST
+Showing nodes accounting for 23654079, 99.48% of 23777974 total
+Dropped 52 nodes (cum <= 118889)
+Showing top 24 nodes out of 44
+      flat  flat%   sum%        cum   cum%
+   3850315 16.19% 16.19%    3850315 16.19%  github.com/moriyoshi/pythago/py.own
+   3735606 15.71% 31.90%    3738585 15.72%  github.com/moriyoshi/pythago/py.(*Object).Int64
+   2703442 11.37% 43.27%    2703442 11.37%  github.com/moriyoshi/pythago/py.borrow (inline)
+   2632417 11.07% 54.34%    3746545 15.76%  github.com/moriyoshi/pythago/py.sequence
+   2296551  9.66% 64.00%    9156111 38.51%  github.com/moriyoshi/pythago/aio.module.func8
+   1352934  5.69% 69.69%    3351814 14.10%  github.com/moriyoshi/pythago/aio.module.channelModule.func31
+   1135983  4.78% 74.47%   21707997 91.29%  reflect.Value.call
+   1059595  4.46% 78.93%   22767592 95.75%  github.com/ebitengine/purego.callbackWrap
+    983067  4.13% 83.06%   20047718 84.31%  github.com/moriyoshi/pythago/py.dispatch
+    983054  4.13% 87.19%    3975924 16.72%  github.com/moriyoshi/pythago/py.fromRaw
+    692855  2.91% 90.11%     692855  2.91%  github.com/moriyoshi/pythago/aio.(*channelOp).finish
+    524296  2.20% 92.31%     524296  2.20%  reflect.unsafe_New
+    425990  1.79% 94.10%     688138  2.89%  github.com/moriyoshi/pythago/py.Release
+    393225  1.65% 95.76%     393225  1.65%  github.com/moriyoshi/pythago/aio.(*typedChannel[go.shape.int64]).prepare
+    360453  1.52% 97.27%     360453  1.52%  github.com/moriyoshi/pythago/py.incRef (inline)
+    262148  1.10% 98.38%     262148  1.10%  github.com/moriyoshi/pythago/aio.(*typedChannel[go.shape.int64]).result (inline)
+    262148  1.10% 99.48%     262148  1.10%  github.com/moriyoshi/pythago/py.Release.func1
+         0     0% 99.48%   22767592 95.75%  github.com/ebitengine/purego.SyscallN
+         0     0% 99.48%   22767592 95.75%  github.com/ebitengine/purego.syscall_SyscallN
+         0     0% 99.48%     688138  2.89%  github.com/moriyoshi/pythago/aio.(*batch[go.shape.struct { github.com/moriyoshi/pythago/aio.token int64; github.com/moriyoshi/pythago/aio.kind int; github.com/moriyoshi/pythago/aio.val interface {}; github.com/moriyoshi/pythago/aio.n int64; github.com/moriyoshi/pythago/aio.data []uint8; github.com/moriyoshi/pythago/aio.pool *[]uint8; github.com/moriyoshi/pythago/aio.msg string; github.com/moriyoshi/pythago/aio.addrs []string }]).wait
+         0     0% 99.48%     955003  4.02%  github.com/moriyoshi/pythago/aio.(*channelOp).run
+         0     0% 99.48%     955003  4.02%  github.com/moriyoshi/pythago/aio.(*typedChannel[go.shape.int64]).prepare.func2
+         0     0% 99.48%    2359330  9.92%  github.com/moriyoshi/pythago/aio.intArg (partial-inline)
+         0     0% 99.48%     294916  1.24%  github.com/moriyoshi/pythago/aio.module.channelModule.func32
