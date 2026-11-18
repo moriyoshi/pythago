@@ -1,0 +1,123 @@
+1
+00:00:00,000 --> 00:00:07,000
+Go is great at building and deploying services. Python has a vast ecosystem of libraries and applications.
+
+2
+00:00:07,000 --> 00:00:14,000
+What if they could work together inside the same program?
+
+3
+00:00:14,000 --> 00:00:25,000
+Pythago embeds CPython in Go executables built with CGO disabled, so both languages can call each other in one process.
+
+4
+00:00:25,000 --> 00:00:34,000
+It starts with a Python distribution from python-build-standalone.
+
+5
+00:00:34,000 --> 00:00:43,000
+Pythago-dist fetches the distribution. On Linux and macOS, it uses bao to translate the Python runtime into a linkable image.
+
+6
+00:00:43,000 --> 00:00:53,000
+On Windows, the package bundles Python and glue DLLs. At startup, Pythago extracts them to a cache and loads them.
+
+7
+00:00:53,000 --> 00:01:05,000
+Your Go application imports the generated package. It includes the runtime for the target platform and the standard library. System libraries are still required.
+
+8
+00:01:05,000 --> 00:01:14,000
+Inside the executable, the py package manages the embedded interpreter and its Python objects.
+
+9
+00:01:14,000 --> 00:01:24,000
+A Go program can import a Python module, call its functions, and work with the returned values.
+
+10
+00:01:24,000 --> 00:01:34,000
+Calls cross a small layer of C glue that handles the parts of CPython’s interface Go cannot call directly.
+
+11
+00:01:34,000 --> 00:01:45,000
+The conversation goes both ways: Python can call Go functions too, and errors can cross the boundary.
+
+12
+00:01:45,000 --> 00:01:54,000
+Python needs more than an interpreter. It also needs modules, resources, and sometimes native extensions.
+
+13
+00:01:54,000 --> 00:02:03,000
+The standard library and application files can be served from a Go filesystem, including embedded files.
+
+14
+00:02:03,000 --> 00:02:12,000
+For larger dependencies, Pythago can use an environment on disk, with compatible packages and native extensions.
+
+15
+00:02:12,000 --> 00:02:20,000
+Extension support depends on the operating system and the Python version and ABI.
+
+16
+00:02:20,000 --> 00:02:30,000
+Go uses goroutines; CPython has its own rules about threads and interpreter state.
+
+17
+00:02:30,000 --> 00:02:40,000
+Pythago coordinates entry into Python and attaches the appropriate Python thread state to the operating system thread.
+
+18
+00:02:40,000 --> 00:02:50,000
+On Linux and macOS, eligible Python threads run on goroutines locked to OS threads. On Windows, CPython starts its own threads.
+
+19
+00:02:50,000 --> 00:03:00,000
+You choose a normal GIL build or an opt-in free-threaded Python build when generating the image.
+
+20
+00:03:00,000 --> 00:03:10,000
+Now follow a request to a Python web application running inside a Go server.
+
+21
+00:03:10,000 --> 00:03:20,000
+Go’s net/http accepts the request and passes it to Pythago’s ASGI handler.
+
+22
+00:03:20,000 --> 00:03:31,000
+The handler translates the request into ASGI events and calls the Python application.
+
+23
+00:03:31,000 --> 00:03:42,000
+For asynchronous work, Pythago’s aio package provides a Go-backed asyncio event loop.
+
+24
+00:03:42,000 --> 00:03:54,000
+The application sends its response through ASGI, and Go writes it back to the client.
+
+25
+00:03:54,000 --> 00:04:05,000
+For synchronous Python web applications, Pythago also provides a WSGI handler.
+
+26
+00:04:05,000 --> 00:04:14,000
+A small pure-Python application can package its Python files and standard library with the executable.
+
+27
+00:04:14,000 --> 00:04:23,000
+Larger native stacks can instead use an environment on disk beside the application.
+
+28
+00:04:23,000 --> 00:04:32,000
+Pythago supports Linux, macOS, and Windows on amd64 and arm64.
+
+29
+00:04:32,000 --> 00:04:40,000
+Compatible native extensions can load from disk. Match the package to your operating system, architecture, and Python ABI.
+
+30
+00:04:40,000 --> 00:04:49,000
+Pythago brings CPython into a Go executable, connects the two languages, and lets them share a process.
+
+31
+00:04:49,000 --> 00:05:00,000
+Use Python’s ecosystem alongside Go’s networking and deployment model. Explore Pythago to see how the pieces fit together.

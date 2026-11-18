@@ -1,0 +1,7 @@
+{
+  "name": "pythago-architecture-animation",
+  "private": true,
+  "type": "module",
+  "scripts": { "render": "node render.mjs", "subtitles": "node subtitles.mjs" },
+  "devDependencies": { "playwright": "1.58.2" }
+}

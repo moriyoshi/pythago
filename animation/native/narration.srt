@@ -1,0 +1,235 @@
+1
+00:00:00,000 --> 00:00:09,000
+When Python starts a thread inside Pythago, how does its native call reach Go? The answer starts before the program runs.
+
+2
+00:00:09,000 --> 00:00:20,000
+Bao edits the binary references. A pthread wrapper chooses who starts the thread. Small thunks handle calling conventions and thread-local addresses.
+
+3
+00:00:20,000 --> 00:00:31,000
+We will follow a pthread_create call through those layers, then see which parts are shared by Linux, macOS, and Windows.
+
+4
+00:00:31,000 --> 00:00:43,000
+A relocatable object groups machine instructions and data into sections. A symbol defines a location in one section, or names something another input must supply.
+
+5
+00:00:43,000 --> 00:00:55,000
+A relocation tells the linker where to apply a fixup, what kind of calculation to use, and which symbol it refers to when one is needed.
+
+6
+00:00:55,000 --> 00:01:08,000
+In this simplified relative call, the symbol is at address two thousand and the next instruction is at one thousand. The displacement is one thousand bytes.
+
+7
+00:01:08,000 --> 00:01:20,000
+A shared library already has a layout and may carry dynamic fixups. Bao can translate the load image and carry forward the fixups it still needs.
+
+8
+00:01:20,000 --> 00:01:32,000
+Think of a call as a reference to a symbol. Wrapping changes that reference from pthread_create to the glue function named __wrap_pthread_create.
+
+9
+00:01:32,000 --> 00:01:44,000
+Inside the wrapper, the reference named __real_pthread_create becomes a reference to pthread_create. It can then resolve to the system implementation.
+
+10
+00:01:44,000 --> 00:01:57,000
+A rename changes a spelling. A prefix groups a component’s own definitions and references under distinct names. Unrelated imports keep their names.
+
+11
+00:01:57,000 --> 00:02:10,000
+Localization makes a definition local to its object. Stripping can remove unused names, but references must stay valid. An edited archive needs an updated symbol index.
+
+12
+00:02:10,000 --> 00:02:22,000
+For an undefined global symbol on the wrap list, Bao changes the name to the wrapper name. The relocation still has a symbol entry to refer to.
+
+13
+00:02:22,000 --> 00:02:35,000
+If the same object defines the wrapped symbol, Bao keeps that definition. It adds or reuses a wrapper symbol and retargets runtime relocations.
+
+14
+00:02:35,000 --> 00:02:48,000
+The real-name case goes the other way. An undefined __real_ reference is renamed to the original name. It resolves to the original definition at link time.
+
+15
+00:02:48,000 --> 00:03:00,000
+The normal shared build starts with the target’s libpython and a C glue object. The generator gives Bao the four pthread symbols that it wants to wrap.
+
+16
+00:03:00,000 --> 00:03:14,000
+On Linux, a call can go through a procedure linkage table stub and its target pointer, in the global offset table. Bao binds that import slot to the wrapper.
+
+17
+00:03:14,000 --> 00:03:27,000
+The generated dist package contains Go-linkable native objects and registration code. The Go linker places the image. Initialization resolves remaining imports and runs native constructors.
+
+18
+00:03:27,000 --> 00:03:40,000
+The Linux LTO route starts from bitcode. LLVM lowers it to native objects and lld wraps the relocatable references before Bao translates the resulting archive.
+
+19
+00:03:40,000 --> 00:03:52,000
+The generator sets the glue object and wrap list together. It selects a dylib on macOS and a shared object on Linux, then calls the Bao build.
+
+20
+00:03:52,000 --> 00:04:04,000
+Bao finds the undefined global imports with the requested name. The example shows the ELF shared-object path after Bao has read the image’s relocations.
+
+21
+00:04:04,000 --> 00:04:17,000
+The edit requires matching glue. Bao rejects a missing wrapper instead of leaving an unresolved hook. Otherwise it gives the imported symbol the wrapper name.
+
+22
+00:04:17,000 --> 00:04:29,000
+In the LTO route, the partial link uses the same wrap list. The link step makes a relocatable object, which Pythago packages with the symbol table for Bao.
+
+23
+00:04:29,000 --> 00:04:41,000
+At runtime, CPython calls its usual pthread function. The edited reference sends it to C glue. The wrapper still has the original pthread calling convention.
+
+24
+00:04:41,000 --> 00:04:54,000
+The wrapper checks for a default stack and asks the spawn hook to handle the call. Success and positive pthread errors are returned to the caller.
+
+25
+00:04:54,000 --> 00:05:07,000
+If the hook is unavailable or the stack size needs libc, the wrapper calls the real pthread function. The forked child disables the Go spawn hook.
+
+26
+00:05:07,000 --> 00:05:20,000
+The C shim tracks the pthread identities it owns. Join and detach use that registry, and ordinary threads fall back to libc. Exit needs its own wrapper.
+
+27
+00:05:20,000 --> 00:05:32,000
+On the dedicated initialization thread, Go registers a C-callable callback for threadStart. C glue keeps the pointer and the target number of spare threads.
+
+28
+00:05:32,000 --> 00:05:45,000
+In the wrapper, the greater-than-or-equal-to-zero test is deliberate. Zero is success and a positive error, such as EAGAIN at the cap, stays an error.
+
+29
+00:05:45,000 --> 00:05:57,000
+If no hook is installed, the C spawn function returns negative one. That is a private signal to use the real pthread implementation.
+
+30
+00:05:57,000 --> 00:06:09,000
+threadStart starts a goroutine and returns. Inside the goroutine, Go locks to the operating-system thread and enters the C thread main function.
+
+31
+00:06:09,000 --> 00:06:21,000
+Creation first assigns a thread record to a waiting spare if one is available. Otherwise C calls the Go spawn hook to start a locked goroutine.
+
+32
+00:06:21,000 --> 00:06:34,000
+The child publishes pthread_self and enters the registry. It signals started, so the parent can return the handle before the Python function has finished.
+
+33
+00:06:34,000 --> 00:06:47,000
+The C entry point runs CPython’s thread function on that operating-system thread. When the function returns, C publishes done and waits for release.
+
+34
+00:06:47,000 --> 00:07:00,000
+Join waits for done and releases the record. Detach grants release without waiting for completion. This preserves the thread’s identity and lifetime.
+
+35
+00:07:00,000 --> 00:07:13,000
+On the special pthread_exit path, the Go-backed thread parks. Calling the system exit there would force an unwind across Go frames. Ordinary threads still use libc.
+
+36
+00:07:13,000 --> 00:07:25,000
+A thunk is a small piece of executable code that adapts one interface to another. In a Go-to-C call, Pythago packs the target and arguments into a frame.
+
+37
+00:07:25,000 --> 00:07:38,000
+The Go runtime enters the C call thunk on the system stack. On Linux and macOS using amd64, six integer slots go in registers and two go on the stack.
+
+38
+00:07:38,000 --> 00:07:51,000
+The native callee can call back into Go and cause the goroutine stack to move. The thunk adjusts the saved frame pointer before writing the return value.
+
+39
+00:07:51,000 --> 00:08:04,000
+The reverse path starts at a C trampoline. It builds a call frame, identifies the registered Go function, and enters the dispatcher through the platform callback bridge.
+
+40
+00:08:04,000 --> 00:08:16,000
+On amd64 the thunk reads the function address and the first six integer arguments from the frame. It puts the last two integer slots on the system stack.
+
+41
+00:08:16,000 --> 00:08:29,000
+After the native call, the thunk saves the result. It compares the goroutine stack top with its earlier value, then stores the result in the corrected frame.
+
+42
+00:08:29,000 --> 00:08:42,000
+In the other direction, the C fastcall entry builds a frame from the Python arguments and the function index. That index selects the Go callable.
+
+43
+00:08:42,000 --> 00:08:55,000
+The trampoline enters Go through crosscall2 on Linux and macOS, and through a Go callback on Windows. On return it hands Python the result or the recorded exception.
+
+44
+00:08:55,000 --> 00:09:08,000
+A native thread-local variable has the same name in the code on every thread. Its address can be different on each operating-system thread.
+
+45
+00:09:08,000 --> 00:09:21,000
+The translated Linux image has a TLS template. Bao’s runtime finds or creates an instance for the calling thread. The variable’s offset within the instance is shared.
+
+46
+00:09:21,000 --> 00:09:34,000
+For the Linux descriptor example, Bao builds a pair: the resolver entry point and the variable’s offset in the template. Native code calls the resolver.
+
+47
+00:09:34,000 --> 00:09:47,000
+On amd64, the thunk returns an offset from the current thread pointer. The caller combines the two to reach that thread’s variable.
+
+48
+00:09:47,000 --> 00:10:00,000
+A cached instance can be found quickly. A miss calls the TLS helper that can allocate a fresh instance. Register preservation follows the descriptor convention.
+
+49
+00:10:00,000 --> 00:10:13,000
+Bao classifies supported native TLS relocations as it reads the image. In the descriptor case, the dynamic fixup becomes an internal descriptor relocation.
+
+50
+00:10:13,000 --> 00:10:26,000
+When Bao lowers the descriptor, it stores the template offset in the second word. A relocation in the first word points to the resolver thunk.
+
+51
+00:10:26,000 --> 00:10:39,000
+The amd64 fast path checks that the cached record belongs to the calling thread. It adds the template offset to the block address, then subtracts the thread pointer.
+
+52
+00:10:39,000 --> 00:10:52,000
+This is a separate use of a thunk. It resolves a storage location under the TLS descriptor convention. A C call thunk moves arguments, and a callback trampoline dispatches code.
+
+53
+00:10:52,000 --> 00:11:04,000
+On Linux, Bao translates the ELF image from libpython. System imports still bind to shared libraries, and Bao supplies native TLS support for the translated image.
+
+54
+00:11:04,000 --> 00:11:17,000
+On macOS, Bao translates a Mach-O dylib. Its bind fixups can target the glue wrappers. Thread-local variables use Mach-O descriptors and Bao’s corresponding runtime.
+
+55
+00:11:17,000 --> 00:11:30,000
+On Windows, the dist package embeds the CPython and glue DLLs. Pythago extracts and loads them, and finds exported addresses with GetProcAddress.
+
+56
+00:11:30,000 --> 00:11:43,000
+Windows keeps CPython’s own thread creation. Go uses SyscallN and a Windows callback for ABI crossing. The pthread and ELF descriptor paths are specific to other targets.
+
+57
+00:11:43,000 --> 00:11:55,000
+At build time, a pthread reference moves to the glue wrapper. A real-name reference in the wrapper keeps a path to the system callable.
+
+58
+00:11:55,000 --> 00:12:07,000
+At runtime, the wrapper chooses a locked Go-backed thread or the system implementation, or returns a pthread error. The child publishes its real thread identity.
+
+59
+00:12:07,000 --> 00:12:20,000
+The call thunk, callback trampoline, and TLS resolver each adapt a different interface. Follow the input and the result at each boundary to see which job is being done.

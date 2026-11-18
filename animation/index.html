@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pythago: two runtimes, one process</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="player" aria-label="Pythago architecture animation">
+    <div id="film" class="film">
+      <div class="grain"></div>
+      <header class="brand"><img src="../assets/pythago.svg" alt=""><span>Pythago</span></header>
+      <div class="copy"><div class="eyebrow" id="eyebrow"></div><h1 id="heading"></h1><p id="subheading"></p></div>
+      <svg id="diagram" viewBox="0 0 1920 1080" aria-hidden="true"></svg>
+      <svg id="presenters" viewBox="0 0 1920 1080" aria-hidden="true">
+        <g id="presenter-stage">
+          <g id="presenter-gopher">
+            <g transform="translate(125 500)">
+              <g id="gopher-left-arm" fill="none" stroke-linecap="round">
+                <defs><path id="gopher-left-arm-line"/></defs>
+                <use href="#gopher-left-arm-line" stroke="#183843" stroke-width="22"/>
+                <use href="#gopher-left-arm-line" stroke="#62c6d2" stroke-width="15"/>
+              </g>
+              <g id="gopher-right-arm" fill="none" stroke-linecap="round">
+                <defs><path id="gopher-right-arm-line"/></defs>
+                <use href="#gopher-right-arm-line" stroke="#183843" stroke-width="22"/>
+                <use href="#gopher-right-arm-line" stroke="#62c6d2" stroke-width="15"/>
+              </g>
+              <g id="gopher-left-leg">
+                <path d="M84,180v24" stroke="#183843" stroke-width="24" stroke-linecap="round" />
+                <path d="M84,180v24" stroke="#62c6d2" stroke-width="17" stroke-linecap="round" />
+                <ellipse cx="71" cy="205.28" rx="31" ry="15" style="fill:#eaa88d; stroke:#183843; stroke-linecap:round; stroke-linejoin:round; stroke-width:4px;" />
+              </g>
+              <g id="gopher-right-leg">
+                <path d="M157,180v24" stroke="#183843" stroke-width="24" stroke-linecap="round" />
+                <path d="M157,180v24" stroke="#62c6d2" stroke-width="17" stroke-linecap="round" />
+                <ellipse cx="165" cy="205.28" rx="31" ry="15" style="fill:#eaa88d; stroke:#183843; stroke-linecap:round; stroke-linejoin:round; stroke-width:4px;" />
+              </g>
+              <g id="gopher-torso">
+                <ellipse cx="68.57" cy="36.47" rx="19.43" ry="16.19" style="fill:#62c6d2; stroke:#183843; stroke-linecap:round; stroke-linejoin:round; stroke-width:3.94px;" />
+                <ellipse cx="175.57" cy="38.28" rx="20.43" ry="18" style="fill:#62c6d2; stroke:#183843; stroke-linecap:round; stroke-linejoin:round; stroke-width:4.26px;" />
+                <circle cx="172.71" cy="40.73" r="8.99" style="fill:#183843;" />
+                <circle cx="74.12" cy="40.26" r="8.99" style="fill:#183843;" />
+                <path d="M51.23,115.53c0-49,20.47-89.55,71.27-89.55s71.5,36,71.5,85l-4.76,52.56c-6.6,34.84-24.24,50.52-66.74,50.44-42.32-.09-65.43-23-68.88-51.17L51.23,115.53Z" style="fill:#62c6d2; stroke:#183843; stroke-linecap:round; stroke-linejoin:round; stroke-width:3.88px;" />
+                <ellipse cx="91" cy="79.28" rx="18.65" ry="21.56" style="fill:#fff; stroke:#183843; stroke-linecap:round; stroke-linejoin:round; stroke-width:2px;" />
+                <ellipse cx="147" cy="81.48" rx="19" ry="23" style="fill:#fff; stroke:#183843; stroke-linecap:round; stroke-linejoin:round; stroke-width:2px;" />
+                <circle id="gopher-left-pupil" cx="91" cy="75" r="6" style="fill:#183843;" />
+                <circle id="gopher-right-pupil" cx="145" cy="76" r="6" style="fill:#183843;" />
+                <ellipse id="gopher-mouth" cx="118" cy="119.5" rx="11" ry="0" fill="#183843" />
+                <g id="gopher-upper-jaw">
+                  <path d="M108,118.28v12.82q10,5.35,20,0v-12.82" style="fill:#fff; stroke:#183843; stroke-linecap:round; stroke-linejoin:round; stroke-width:2.07px;" />
+                  <path d="M118,119.98v12.3" style="fill:none; stroke:#183843; stroke-linecap:round; stroke-linejoin:round; stroke-width:2.22px;" />
+                  <ellipse id="gopher-snout" cx="115.07" cy="104.48" rx="22" ry="15.5" style="fill:#f6e8d6; stroke:#183843; stroke-linecap:round; stroke-linejoin:round; stroke-width:2px;" />
+                </g>
+                <ellipse id="gopher-nose" cx="111" cy="90.78" rx="7" ry="5" style="fill:#183843;" />
+              </g>
+            </g>
+          </g>
+          <defs>
+            <!-- Finish revealing the support strokes where the foreground mask begins. -->
+            <linearGradient id="shoulder-overlap" gradientUnits="userSpaceOnUse" x1="0" x2="0" y1="130" y2="150">
+              <stop stop-color="black"/>
+              <stop offset="1" stop-color="white"/>
+            </linearGradient>
+            <mask id="forearms-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="300" height="240">
+              <rect width="300" height="240" fill="url(#shoulder-overlap)"/>
+            </mask>
+            <mask id="held-belly-mask" maskUnits="userSpaceOnUse" x="0" y="150" width="300" height="90">
+              <rect x="0" y="150" width="300" height="90" fill="white"/>
+            </mask>
+          </defs>
+          <g id="supporting-arms" opacity="0" mask="url(#forearms-mask)">
+            <use href="#gopher-right-arm"/>
+            <use href="#gopher-left-arm"/>
+          </g>
+          <g id="presenter-snake">
+            <g transform="translate(370 516) scale(1.36)">
+              <g id="snake-ears">
+                <ellipse cx="39.08" cy="90.78" rx="5.59" ry="4.62" style="fill:#f4d978; stroke:#183843; stroke-linecap:round; stroke-linejoin:round; stroke-width:1.13px;" />
+                <ellipse cx="62.01" cy="90.91" rx="5.83" ry="5.14" style="fill:#f4d978; stroke:#183843; stroke-linecap:round; stroke-linejoin:round; stroke-width:1.22px;" />
+                <circle cx="62.01" cy="90.91" r="2.57" style="fill:#183843;" />
+                <circle cx="40" cy="90.91" r="2.57" style="fill:#183843;" />
+              </g>
+              <path id="snake-skin" fill="#f4d978" stroke="#183843" stroke-width="2" stroke-linejoin="round"/>
+              <g id="snake-face">
+                <ellipse cx="44.02" cy="104.81" rx="4.92" ry="6.15" transform="translate(-13.24 6.61) rotate(-7.46)" style="fill:#fff; stroke:#183843; stroke-linecap:round; stroke-linejoin:round; stroke-width:1.05px;" />
+                <circle id="snake-left-pupil" cx="44.02" cy="104.81" r="1.35" style="fill:#183843;" />
+                <ellipse cx="58.54" cy="103.76" rx="4.62" ry="6.49" transform="translate(-12.98 8.48) rotate(-7.46)" style="fill:#fff; stroke:#183843; stroke-linecap:round; stroke-linejoin:round; stroke-width:1.05px;" />
+                <circle id="snake-right-pupil" cx="58.54" cy="103.76" r="1.35" style="fill:#183843;" />
+                <path d="M50,112.94l.44,3.4q3.02,1.04,5.66-.75l-.44-3.39" style="fill:#fff; stroke:#183843; stroke-linecap:round; stroke-linejoin:round; stroke-width:.86px;" />
+                <path d="M52.91,113.21l.37,2.83" style="fill:none; stroke:#183843; stroke-linecap:round; stroke-linejoin:round; stroke-width:.86px;" />
+                <ellipse cx="52.37" cy="111.12" rx="6.28" ry="3.44" transform="translate(-13.99 7.75) rotate(-7.46)" style="fill:#f6e8d6; stroke:#183843; stroke-linecap:round; stroke-linejoin:round; stroke-width:.99px;" />
+                <ellipse cx="52.38" cy="107.65" rx="2" ry="1.43" transform="translate(-13.54 7.72) rotate(-7.46)" style="fill:#183843;" />
+                <g id="snake-wrinkles" fill="none" stroke="#183843" stroke-linecap="round">
+                  <path d="M56.83,123.35s-8.07,3.75-17.98-3" />
+                  <path d="M52.38,126.43s-5.38,1.35-10.77-2.04" />
+                </g>
+              </g>
+            </g>
+          </g>
+          <g id="holding-paws" opacity="0" mask="url(#held-belly-mask)">
+            <use href="#gopher-left-arm"/>
+            <use href="#gopher-right-arm"/>
+          </g>
+        </g>
+      </svg>
+      <img class="splash-art" src="../assets/pythago.svg" alt="Pythago’s gopher and gophersnake">
+      <div class="opening-title" id="opening-title" hidden>
+        <h1 id="opening-heading"></h1>
+        <p id="opening-subheading"></p>
+      </div>
+      <div class="end-credits" id="end-credits" hidden>
+        <div>
+          <a href="https://go.dev/blog/gopher">Go gopher design by Renée French</a>
+          · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>
+        </div>
+        <div id="voice-credit" hidden>
+          Synthesized voice · Cori Samuel · <a href="https://www.openslr.org/109/">Hi-Fi TTS, NVIDIA</a>
+          · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>
+        </div>
+        <div id="ryan-voice-credit" hidden>
+          Synthesized voice · <a href="https://huggingface.co/rhasspy/piper-voices/blob/main/en/en_US/ryan/high/MODEL_CARD">Piper Ryan</a>
+          · <a href="https://arxiv.org/abs/2106.08468">RyanSpeech dataset</a>
+          (<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>)
+        </div>
+      </div>
+      <div class="caption" id="caption" aria-live="off"></div>
+      <div class="footer"><span>Go <b>×</b> Python</span><span id="footer-label"></span><span>Pythago / 2026</span></div>
+      <div class="progress"><span id="progress"></span></div>
+    </div>
+    <div class="controls" id="controls">
+      <button id="play" type="button" aria-label="Play animation">▶</button>
+      <span id="clock">00:00</span>
+      <input id="seek" type="range" min="0" step="0.05" value="0" aria-label="Seek animation">
+      <label><input id="captions-toggle" type="checkbox" checked> Captions</label>
+      <select id="chapters" aria-label="Jump to chapter"></select>
+    </div>
+  </main>
+  <script>
+    {
+      const params = new URLSearchParams(location.search);
+      const movie = params.get('movie') ?? (params.has('internals') ? 'internals' : 'introduction');
+      window.PYTHAGO_MOVIE = ['internals', 'native'].includes(movie) ? movie : 'introduction';
+    }
+  </script>
+  <script src="story.js"></script>
+  <script src="internals/story.js"></script>
+  <script src="internals/excerpts.js"></script>
+  <script src="figure-board.js"></script>
+  <script src="internals/figures.js"></script>
+  <script src="native/story.js"></script>
+  <script src="native/excerpts.js"></script>
+  <script src="native/figures.js"></script>
+  <script src="native/speech-track.js"></script>
+  <script src="internals/speech-track.js"></script>
+  <script src="speech-track.js"></script>
+  <script src="presenters.js"></script>
+  <script src="player.js"></script>
+</body>
+</html>
